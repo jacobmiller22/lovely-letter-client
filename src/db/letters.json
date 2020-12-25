@@ -5,8 +5,8 @@
     "recipient": "priyanka",
     "sender": "jacob",
     "data": {
-      "title": "Title 1",
-      "body": "this is the body",
+      "title": "This is the first letter writing to Priyanka from this application.",
+      "body": "This body is going to be short at first, unfortunately I have been pestered all morning about this. I have some more features of this website almost ready, they aren't perfect yet so they are currently disabled. I think you are going to like this, honey. This way we can archive our messages and everytime you are on this website you are interacting with my mind. Also, I will be setting up Google Analytics to this site so I can make statistical representations of how often you use this.",
       "meta": {
         "notes": "I Hope you like this"
       }
@@ -14,12 +14,12 @@
   },
   {
     "id": "1",
-    "date": "12/26/2020",
+    "date": "12/25/2020",
     "recipient": "priyanka",
     "sender": "jacob",
     "data": {
-      "title": "Title 2",
-      "body": "this is the body",
+      "title": "Letter number 2",
+      "body": "This will be filled out by tonight, so you can keep checking it as the time goes on. I don't have time with my parents right now to write this. I hope you will enjoy",
       "meta": {
         "notes": "I Hope you like this"
       }
