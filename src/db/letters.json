@@ -1,0 +1,28 @@
+[
+  {
+    "id": "0",
+    "date": "12/25/2020",
+    "recipient": "priyanka",
+    "sender": "jacob",
+    "data": {
+      "title": "Title 1",
+      "body": "this is the body",
+      "meta": {
+        "notes": "I Hope you like this"
+      }
+    }
+  },
+  {
+    "id": "1",
+    "date": "12/26/2020",
+    "recipient": "priyanka",
+    "sender": "jacob",
+    "data": {
+      "title": "Title 2",
+      "body": "this is the body",
+      "meta": {
+        "notes": "I Hope you like this"
+      }
+    }
+  }
+]
