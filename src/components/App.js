@@ -29,7 +29,10 @@ const App = () => {
     getJWTToken();
 
     const fetchData = async () => {
-      const res = await letterApi.get("/letters", { params: {} });
+      const auth = {
+        Authorization: `Bearer ${window.localStorage.getItem("jwt")}`,
+      };
+      const res = await letterApi.get("/letters", { headers: { auth } });
       setLetters(res.data);
     };
     fetchData();
