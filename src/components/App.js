@@ -32,7 +32,7 @@ const App = () => {
       const auth = {
         Authorization: `Bearer ${window.localStorage.getItem("jwt")}`,
       };
-      const res = await letterApi.get("/letters", { headers: { auth } });
+      const res = await letterApi.get("/letters", { headers: { ...auth } });
       setLetters(res.data);
     };
     fetchData();
