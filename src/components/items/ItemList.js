@@ -8,7 +8,6 @@ const ItemList = ({ items, variant, title, itemContent, detailContent }) => {
 
   const onItemSelect = (item) => {
     setSelected(item);
-    console.log("RERERE");
   };
 
   const renderFocusDetail = () => {
@@ -19,7 +18,7 @@ const ItemList = ({ items, variant, title, itemContent, detailContent }) => {
         </div>
       );
     }
-
+    console.log("SHOW DETAIL")
     if (detailContent) {
       return detailContent(selected);
     }
@@ -27,16 +26,20 @@ const ItemList = ({ items, variant, title, itemContent, detailContent }) => {
   };
 
   const renderItems = (onItemSelect) => {
+    
     if (itemContent) {
+      
       if (!onItemSelect) {
+        // Figure out what to do if we do not have a callback for selecting an item
       }
       return items.map((item) => {
         return itemContent(item, onItemSelect);
       });
     }
 
+  
     return items.map((item) => {
-      return <Item item={item} onItemSelect={onItemSelect} key={item.title} />;
+      return <Item item={item} onItemSelect={onItemSelect} key={item._id} />;
     });
   };
 

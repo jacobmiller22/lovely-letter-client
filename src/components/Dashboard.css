@@ -1,0 +1,16 @@
+.left-side-content {
+  max-width: 40vw;
+  flex-direction: column;
+  padding: 10px;
+}
+
+#dashboard {
+  display: flex;
+  
+}
+
+.right-side-content {
+  max-width: 40vw;
+  padding: 10px;
+}
+

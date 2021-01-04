@@ -9,10 +9,10 @@ const Item = ({ item, onItemSelect }) => {
     }
     return;
   };
-
+console.log(item)
   return (
     <Link
-      to={`/${item.id}`}
+      to={`/${item._id}`}
       className="item"
       key={item.id}
       onClick={() => onItemClick()}

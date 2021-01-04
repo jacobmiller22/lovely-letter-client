@@ -1,21 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import ItemList from "../ItemList";
+import ItemList from "../items/ItemList";
 import LetterDetail from "./LetterDetail";
 
-import letters from "../../db/letters";
-
-const LetterLanding = ({ props }) => {
+const LetterLanding = ({ letters, title }) => {
   const letterContent = (item) => {
     return (
-      <Link to={`/${item.id}`} className="item" key={item.id}>
-        <div className="middle aligned content" style={{ paddingLeft: "2rem" }}>
-          <div className="ui header">{item.data.title}</div>
+      <Link to={`/${item._id}`} className='item' key={item._id}>
+        <div className='middle aligned content' style={{ paddingLeft: "1rem" }}>
+          <div className='ui header'>{item.title}</div>
 
-          <div className="description">
+          <div className='description'>
             <strong>To: </strong>
-            {item.recipient} <strong>From: </strong>
+            {item.receiver} <strong>From: </strong>
             {item.sender}
           </div>
         </div>
@@ -23,12 +21,15 @@ const LetterLanding = ({ props }) => {
     );
   };
 
+  const detailContent = <LetterDetail content={letters} />;
+
   return (
     <div>
       <ItemList
+        title={title}
         items={letters}
         itemContent={letterContent}
-        detailContent={LetterDetail}
+        detailContent={detailContent}
       />
     </div>
   );
