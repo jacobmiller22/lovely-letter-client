@@ -4,7 +4,7 @@ import { getEarlierRoute } from "../../utils";
 
 import "./LetterDetail.css";
 
-const LetterDetail = ({ letters, match, history, location }) => {
+const LetterDetail = ({ letters, match, location }) => {
   const [letter, setLetter] = useState(null);
 
   useEffect(() => {
@@ -14,7 +14,7 @@ const LetterDetail = ({ letters, match, history, location }) => {
         setLetter(letter);
       }
     });
-  }, [letters, match.params.id]);
+  }, [letters, match]);
 
   const renderContent = () => {
     if (!letter) {

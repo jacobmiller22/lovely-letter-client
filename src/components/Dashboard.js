@@ -72,7 +72,6 @@ const Dashboard = ({
 
   const renderAuth = () => {
     if (currUser) {
-      console.log(currUser);
       return (
         <div className='ui center aligned header'>
           Welcome, {currUser.username}!

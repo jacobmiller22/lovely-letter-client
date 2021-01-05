@@ -23,12 +23,10 @@ const App = () => {
         var base64 = base64Url.replace("-", "+").replace("_", "/");
         var { user } = JSON.parse(window.atob(base64));
       }
-      console.log(currUser);
+
       setCurrUser(user);
-      console.log(currUser);
     };
     getJWTToken();
-    console.log(currUser);
   }, [isLoggedIn]);
 
   useEffect(() => {
