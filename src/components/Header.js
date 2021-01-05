@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Header = ({ currUser, setCurrUser }) => {
+const Header = ({ currUser, setCurrUser, setIsLoggedIn }) => {
   const renderAuth = () => {
     const signOut = () => {
       window.localStorage.removeItem("jwt");
       setCurrUser(null);
+      setIsLoggedIn(false);
     };
 
     if (currUser) {
