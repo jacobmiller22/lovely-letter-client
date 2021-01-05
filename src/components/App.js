@@ -12,6 +12,7 @@ import letterApi from "../apis/letter";
 const App = () => {
   const [letters, setLetters] = useState([]);
   const [currUser, setCurrUser] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const getJWTToken = () => {
@@ -22,18 +23,23 @@ const App = () => {
         var base64 = base64Url.replace("-", "+").replace("_", "/");
         var { user } = JSON.parse(window.atob(base64));
       }
+      console.log(currUser);
       setCurrUser(user);
+      console.log(currUser);
     };
     getJWTToken();
-  }, []);
+    console.log(currUser);
+  }, [isLoggedIn]);
 
   useEffect(() => {
     const fetchLetters = async () => {
       const auth = {
         Authorization: `Bearer ${window.localStorage.getItem("jwt")}`,
       };
-
-      const res = await letterApi.get("/letters", { headers: { ...auth } });
+      const res = await letterApi.get("/letters", {
+        headers: { ...auth },
+        params: { receiver: currUser.username },
+      });
       setLetters(res.data);
     };
 
@@ -49,10 +55,13 @@ const App = () => {
       letters={letters}
       currUser={currUser}
       setCurrUser={setCurrUser}
+      setIsLoggedIn={setIsLoggedIn}
       {...props}
     />
   );
   const Detail = (props) => <LetterDetail letters={letters} {...props} />;
+
+  const Create = (props) => <LetterCreate currUser={currUser} {...props} />;
 
   return (
     <div className='ui container'>
@@ -62,7 +71,7 @@ const App = () => {
           <Route path='/' exact component={Dash} />
           <Route path='/auth/register' exact component={Register} />
           <Route path='/:_id' exact component={Detail} />
-          <Route path='/drafts/new' exact component={LetterCreate} />
+          <Route path='/drafts/new' exact component={Create} />
         </div>
       </BrowserRouter>
     </div>

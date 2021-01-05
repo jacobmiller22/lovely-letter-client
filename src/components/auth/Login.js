@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import user from "../../apis/user";
 
-const Login = ({ currUser, setCurrUser }) => {
+const Login = ({ currUser, setCurrUser, setIsLoggedIn }) => {
   const initialValues = { username: "", password: "" };
   const [vals, setVals] = useState(initialValues);
 
@@ -16,8 +16,20 @@ const Login = ({ currUser, setCurrUser }) => {
     e.preventDefault();
     (async () => {
       const res = await user.get("/auth", { params: { user: vals } });
-      window.localStorage.setItem("jwt", res.data.token);
-      setCurrUser(res.data);
+      console.log(res);
+      if (res.status === 200) {
+        const { token } = res.data;
+        console.log(token);
+        window.localStorage.setItem("jwt", token);
+
+        if (token) {
+          var base64Url = token.split(".")[1];
+          var base64 = base64Url.replace("-", "+").replace("_", "/");
+          var { userClaims } = JSON.parse(window.atob(base64));
+        }
+        setCurrUser(userClaims);
+        setIsLoggedIn(true);
+      }
     })();
   };
 

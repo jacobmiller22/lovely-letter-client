@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import ItemList from "../items/ItemList";
 import LetterDetail from "./LetterDetail";
 
-const LetterLanding = ({ letters, title }) => {
+const LetterLanding = ({ letters, title, currUser }) => {
   const letterContent = (item) => {
     return (
       <Link to={`/${item._id}`} className='item' key={item._id}>

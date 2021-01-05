@@ -7,11 +7,27 @@ import { getEarlierRoute } from "../../utils";
 
 import lettersApi from "../../apis/letter";
 
-const LetterCreate = ({ location }) => {
+const LetterCreate = ({ location, currUser, history }) => {
   const onSubmit = async (formValues) => {
-    const res = await lettersApi.post("/letters", { ...formValues });
-    console.log(res);
-    // Check response
+    const auth = {
+      Authorization: `Bearer ${window.localStorage.getItem("jwt")}`,
+    };
+
+    const formData = { ...formValues, sender: currUser.username };
+    console.log(formData);
+    const res = await lettersApi.post(
+      "/letters",
+      {
+        ...formData,
+      },
+      { headers: { ...auth } }
+    );
+
+    if (res.status === 200) {
+      history.push("/");
+    } else {
+      // Show error message - Oops something went wrong.
+    }
   };
 
   const vals =

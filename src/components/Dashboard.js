@@ -5,7 +5,13 @@ import LetterLanding from "./letters/LetterLanding";
 import "./Dashboard.css";
 import Login from "./auth/Login";
 
-const Dashboard = ({ letters, location, currUser, setCurrUser }) => {
+const Dashboard = ({
+  letters,
+  location,
+  currUser,
+  setCurrUser,
+  setIsLoggedIn,
+}) => {
   const initialValues = { title: "", receiver: "", content: "" };
   const [vals, setVals] = useState(initialValues);
 
@@ -66,9 +72,23 @@ const Dashboard = ({ letters, location, currUser, setCurrUser }) => {
 
   const renderAuth = () => {
     if (currUser) {
-      return null;
+      console.log(currUser);
+      return (
+        <div className='ui center aligned header'>
+          Welcome, {currUser.username}!
+        </div>
+      );
     } else {
-      return <Login currUser={currUser} setCurrUser={setCurrUser} />;
+      return (
+        <>
+          <Login
+            currUser={currUser}
+            setCurrUser={setCurrUser}
+            setIsLoggedIn={setIsLoggedIn}
+          />{" "}
+          <div className='ui divider'></div>
+        </>
+      );
     }
   };
 
@@ -77,14 +97,23 @@ const Dashboard = ({ letters, location, currUser, setCurrUser }) => {
       <div className='ui two column very relaxed stackable grid'>
         <div className='column'>
           {renderAuth()}
-          <div className='ui divider'></div>
+
           <span>
-            <i className='ui very large icons'>
+            <i className='ui very large icons bar'>
+              <i className='bell icon'></i>
+              <div className='floating ui tiny red circular label'>1</div>
+            </i>
+            <i className='ui very large icons bar'>
               <i className='bell icon'></i>
               <div className='floating ui tiny red circular label'>1</div>
             </i>
           </span>
-          <div>News?</div>
+          <div id='dash-content' className='ui content'>
+            <div className='ui medium header'>Updates</div>
+            <div className='ui description'>
+              Update details will be given here!
+            </div>
+          </div>
         </div>
         <div className='column'>
           {NewLetter()}
