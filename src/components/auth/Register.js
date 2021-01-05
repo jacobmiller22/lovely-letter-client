@@ -13,7 +13,6 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("User Input: ", vals);
 
     (async () => {
       const res = await userApi.post("/auth", { ...vals });

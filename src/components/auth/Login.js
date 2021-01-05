@@ -14,7 +14,6 @@ const Login = ({ currUser, setCurrUser }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("User Input: ", vals);
     (async () => {
       const res = await user.get("/auth", { params: { user: vals } });
       window.localStorage.setItem("jwt", res.data.token);

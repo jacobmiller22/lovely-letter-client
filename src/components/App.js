@@ -15,10 +15,8 @@ const App = () => {
 
   useEffect(() => {
     const getJWTToken = () => {
-      console.log("Retrieving JWT Token from local storage");
       const token = window.localStorage.getItem("jwt");
       // Decode token
-      console.log(token);
       if (token) {
         var base64Url = token.split(".")[1];
         var base64 = base64Url.replace("-", "+").replace("_", "/");
@@ -27,16 +25,24 @@ const App = () => {
       setCurrUser(user);
     };
     getJWTToken();
+  }, []);
 
-    const fetchData = async () => {
+  useEffect(() => {
+    const fetchLetters = async () => {
       const auth = {
         Authorization: `Bearer ${window.localStorage.getItem("jwt")}`,
       };
+
       const res = await letterApi.get("/letters", { headers: { ...auth } });
       setLetters(res.data);
     };
-    fetchData();
-  }, []);
+
+    if (currUser) {
+      fetchLetters();
+    } else {
+      setLetters([]);
+    }
+  }, [currUser]);
 
   const Dash = (props) => (
     <Dashboard
