@@ -11,6 +11,10 @@ const Dashboard = ({
   currUser,
   setCurrUser,
   setIsLoggedIn,
+  dir,
+  setDir,
+  field,
+  setField,
 }) => {
   const initialValues = { title: "", receiver: "", content: "" };
   const [vals, setVals] = useState(initialValues);
@@ -21,7 +25,16 @@ const Dashboard = ({
     setVals({ ...vals, [nam]: val });
   };
 
-  const Landing = () => <LetterLanding letters={letters} title='Letters' />;
+  const Landing = () => (
+    <LetterLanding
+      letters={letters}
+      title='Letters'
+      dir={dir}
+      setDir={setDir}
+      field={field}
+      setField={setField}
+    />
+  );
 
   const NewLetter = () => {
     return (
@@ -84,7 +97,7 @@ const Dashboard = ({
             currUser={currUser}
             setCurrUser={setCurrUser}
             setIsLoggedIn={setIsLoggedIn}
-          />{" "}
+          />
           <div className='ui divider'></div>
         </>
       );

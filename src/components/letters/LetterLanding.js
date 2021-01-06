@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import ItemList from "../items/ItemList";
 import LetterDetail from "./LetterDetail";
 
-const LetterLanding = ({ letters, title, currUser }) => {
+const LetterLanding = ({ letters, title, dir, setDir, field, setField }) => {
   const letterContent = (item) => {
     return (
       <Link to={`/${item._id}`} className='item' key={item._id}>
@@ -22,7 +22,10 @@ const LetterLanding = ({ letters, title, currUser }) => {
   };
 
   const detailContent = <LetterDetail content={letters} />;
-
+  const FIELDS = [
+    { key: "title", text: "Title", value: "title" },
+    { key: "date", text: "Date", value: "date" },
+  ];
   return (
     <div>
       <ItemList
@@ -30,6 +33,11 @@ const LetterLanding = ({ letters, title, currUser }) => {
         items={letters}
         itemContent={letterContent}
         detailContent={detailContent}
+        dir={dir}
+        setDir={setDir}
+        field={field}
+        setField={setField}
+        FIELDS={FIELDS}
       />
     </div>
   );

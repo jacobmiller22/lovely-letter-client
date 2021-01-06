@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import { BrowserRouter, Route } from "react-router-dom";
 
 import Header from "./Header";
@@ -13,6 +14,8 @@ const App = () => {
   const [letters, setLetters] = useState([]);
   const [currUser, setCurrUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [dir, setDir] = useState("DESC");
+  const [field, setField] = useState("title");
 
   useEffect(() => {
     const getJWTToken = () => {
@@ -36,7 +39,12 @@ const App = () => {
       };
       const res = await letterApi.get("/letters", {
         headers: { ...auth },
-        params: { receiver: currUser.username },
+        params: {
+          q: JSON.stringify({
+            where: { receiver: currUser.username },
+            order: `${field} ${dir}`,
+          }),
+        },
       });
       setLetters(res.data);
     };
@@ -46,7 +54,7 @@ const App = () => {
     } else {
       setLetters([]);
     }
-  }, [currUser]);
+  }, [currUser, dir, field]);
 
   const Dash = (props) => (
     <Dashboard
@@ -54,6 +62,10 @@ const App = () => {
       currUser={currUser}
       setCurrUser={setCurrUser}
       setIsLoggedIn={setIsLoggedIn}
+      dir={dir}
+      setDir={setDir}
+      field={field}
+      setField={setField}
       {...props}
     />
   );
