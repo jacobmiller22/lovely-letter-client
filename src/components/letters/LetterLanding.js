@@ -27,7 +27,15 @@ const LetterLanding = ({ letters, title, dir, setDir, field, setField }) => {
     { key: "date", text: "Date", value: "date" },
   ];
   return (
-    <div>
+    <div className='ui container'>
+      <div className='ui two item stackable tabs menu'>
+        <a className='item' data-tab='inbox'>
+          Inbox
+        </a>
+        <a className='item' data-tab='sent'>
+          Sent
+        </a>
+      </div>
       <ItemList
         title={title}
         items={letters}
