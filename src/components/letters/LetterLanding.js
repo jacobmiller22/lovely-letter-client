@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 import ItemList from "../items/ItemList";
@@ -43,6 +43,7 @@ const LetterLanding = ({
     <div className='ui container'>
       <div className='ui three item stackable tabs menu'>
         <a
+          role='button'
           className={`${cat === "inbox" ? "active" : ""} item`}
           data-tab='inbox'
           onClick={handleClick}
@@ -50,6 +51,7 @@ const LetterLanding = ({
           Inbox
         </a>
         <a
+          role='button'
           className={`${cat === "sent" ? "active" : ""} item`}
           data-tab='sent'
           onClick={handleClick}
@@ -57,6 +59,7 @@ const LetterLanding = ({
           Sent
         </a>
         <a
+          role='button'
           className={`${cat === "drafts" ? "active" : ""} item`}
           data-tab='drafts'
           onClick={handleClick}
