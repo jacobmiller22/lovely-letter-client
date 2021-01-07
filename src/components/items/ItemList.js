@@ -4,8 +4,6 @@ import Item from "./Item";
 import ItemDetail from "./ItemDetail";
 import { Dropdown } from "semantic-ui-react";
 
-import _ from "lodash";
-
 const ItemList = ({
   items,
   dir,
@@ -26,8 +24,8 @@ const ItemList = ({
   const renderFocusDetail = () => {
     if (!selected) {
       return (
-        <div className='ui container'>
-          <div className='ui divided items'>{renderItems(onItemSelect)}</div>
+        <div className="ui container">
+          <div className="ui divided items">{renderItems(onItemSelect)}</div>
         </div>
       );
     }
@@ -55,25 +53,26 @@ const ItemList = ({
 
   const renderArrow = () => {
     if (dir === "ASC") {
-      return <i className='angle up icon' />;
+      return <i className="angle up icon" />;
     }
     if (dir === "DESC") {
-      return <i className='angle down icon' />;
+      return <i className="angle down icon" />;
     }
     return null;
   };
 
   return (
     <div>
-      <div className='ui large header'>
+      <div className="ui large header">
         {title}
         <button
-          className='ui circular icon button'
-          onClick={() => setDir(dir === "ASC" ? "DESC" : "ASC")}>
+          className="ui circular icon button"
+          onClick={() => setDir(dir === "ASC" ? "DESC" : "ASC")}
+        >
           {renderArrow()}
         </button>
         <Dropdown
-          placeholder='Sort by:'
+          placeholder="Sort by:"
           selection
           options={FIELDS}
           onChange={(e, { value }) => setField(value)}
