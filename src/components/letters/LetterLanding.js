@@ -43,6 +43,7 @@ const LetterLanding = ({
     <div className='ui container'>
       <div className='ui three item stackable tabs menu'>
         <a
+          href='#/'
           role='button'
           className={`${cat === "inbox" ? "active" : ""} item`}
           data-tab='inbox'
@@ -51,6 +52,7 @@ const LetterLanding = ({
           Inbox
         </a>
         <a
+          href='#/'
           role='button'
           className={`${cat === "sent" ? "active" : ""} item`}
           data-tab='sent'
@@ -59,6 +61,7 @@ const LetterLanding = ({
           Sent
         </a>
         <a
+          href='#/'
           role='button'
           className={`${cat === "drafts" ? "active" : ""} item`}
           data-tab='drafts'
