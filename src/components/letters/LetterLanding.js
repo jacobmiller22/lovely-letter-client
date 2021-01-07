@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import ItemList from "../items/ItemList";
 import LetterDetail from "./LetterDetail";
 
-const LetterLanding = ({ letters, title, dir, setDir, field, setField }) => {
+const LetterLanding = ({
+  letters,
+  title,
+  dir,
+  setDir,
+  field,
+  setField,
+  cat,
+  setCat,
+}) => {
+  const handleClick = (e) => {
+    setCat(e.target.name);
+  };
+
   const letterContent = (item) => {
     return (
       <Link to={`/${item._id}`} className='item' key={item._id}>
@@ -28,12 +41,27 @@ const LetterLanding = ({ letters, title, dir, setDir, field, setField }) => {
   ];
   return (
     <div className='ui container'>
-      <div className='ui two item stackable tabs menu'>
-        <a className='item' data-tab='inbox'>
+      <div className='ui three item stackable tabs menu'>
+        <a
+          className={`${cat === "inbox" ? "active" : ""} item`}
+          data-tab='inbox'
+          onClick={handleClick}
+          name='inbox'>
           Inbox
         </a>
-        <a className='item' data-tab='sent'>
+        <a
+          className={`${cat === "sent" ? "active" : ""} item`}
+          data-tab='sent'
+          onClick={handleClick}
+          name='sent'>
           Sent
+        </a>
+        <a
+          className={`${cat === "drafts" ? "active" : ""} item`}
+          data-tab='drafts'
+          onClick={handleClick}
+          name='drafts'>
+          Drafts
         </a>
       </div>
       <ItemList

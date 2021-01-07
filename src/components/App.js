@@ -15,7 +15,8 @@ const App = () => {
   const [currUser, setCurrUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [dir, setDir] = useState("DESC");
-  const [field, setField] = useState("title");
+  const [field, setField] = useState("date");
+  const [cat, setCat] = useState("inbox");
 
   useEffect(() => {
     const getJWTToken = () => {
@@ -37,11 +38,25 @@ const App = () => {
       const auth = {
         Authorization: `Bearer ${window.localStorage.getItem("jwt")}`,
       };
+
+      const where = (cat, currUser) => {
+        switch (cat) {
+          case "inbox":
+            return { receiver: currUser.username };
+          case "sent":
+            return { sender: currUser.username };
+          case "drafts":
+            return { sender: currUser.username, isDraft: true };
+          default:
+            return { receiver: currUser.username };
+        }
+      };
+
       const res = await letterApi.get("/letters", {
         headers: { ...auth },
         params: {
           q: JSON.stringify({
-            where: { receiver: currUser.username },
+            where: where(cat, currUser),
             order: `${field} ${dir}`,
           }),
         },
@@ -54,7 +69,7 @@ const App = () => {
     } else {
       setLetters([]);
     }
-  }, [currUser, dir, field]);
+  }, [currUser, dir, field, cat]);
 
   const Dash = (props) => (
     <Dashboard
@@ -66,6 +81,8 @@ const App = () => {
       setDir={setDir}
       field={field}
       setField={setField}
+      cat={cat}
+      setCat={setCat}
       {...props}
     />
   );

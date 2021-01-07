@@ -15,6 +15,8 @@ const Dashboard = ({
   setDir,
   field,
   setField,
+  cat,
+  setCat,
 }) => {
   const initialValues = { title: "", receiver: "", content: "" };
   const [vals, setVals] = useState(initialValues);
@@ -33,6 +35,8 @@ const Dashboard = ({
       setDir={setDir}
       field={field}
       setField={setField}
+      cat={cat}
+      setCat={setCat}
     />
   );
 
