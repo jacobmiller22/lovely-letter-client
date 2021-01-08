@@ -8,7 +8,6 @@ const LetterDetail = ({ letters, match, location }) => {
   const [letter, setLetter] = useState(null);
 
   useEffect(() => {
-    console.log(match);
     letters.forEach((letter) => {
       if (letter._id === match.params._id) {
         setLetter(letter);

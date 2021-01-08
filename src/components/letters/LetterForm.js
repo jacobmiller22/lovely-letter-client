@@ -1,21 +1,24 @@
 import React, { useState } from "react";
 
-const LetterForm = ({ values, onSubmit }) => {
-  const initialVals = values
-    ? { ...values, content: "" }
-    : { title: "", receiver: "", content: "" };
-
-  const [vals, setVals] = useState(initialVals);
+const LetterForm = ({ onSubmit, history, setIsPristine, vals, setVals }) => {
+  const [isDraft, setIsDraft] = useState(false);
 
   const handleChange = ({ target }) => {
     let nam = target.name;
     let val = target.value;
     setVals({ ...vals, [nam]: val });
+
+    if (vals.title === "" && vals.receiver === "" && vals.content === "") {
+      setIsPristine(true);
+    } else {
+      setIsPristine(false);
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(vals);
+    onSubmit({ ...vals, isDraft });
+    history.push("/");
   };
 
   return (
@@ -61,6 +64,14 @@ const LetterForm = ({ values, onSubmit }) => {
 
         <button className='ui button' type='submit'>
           Send
+        </button>
+        <button
+          className='ui button'
+          type='submit'
+          onClick={() => {
+            setIsDraft(true);
+          }}>
+          Save as draft
         </button>
       </form>
     </div>

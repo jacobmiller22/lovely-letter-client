@@ -9,6 +9,7 @@ import LetterDetail from "./letters/LetterDetail";
 import LetterCreate from "./letters/LetterCreate";
 
 import letterApi from "../apis/letter";
+import ContactLanding from "./contacts/ContactLanding";
 
 const App = () => {
   const [letters, setLetters] = useState([]);
@@ -35,10 +36,6 @@ const App = () => {
 
   useEffect(() => {
     const fetchLetters = async () => {
-      const auth = {
-        Authorization: `Bearer ${window.localStorage.getItem("jwt")}`,
-      };
-
       const where = (cat, currUser) => {
         switch (cat) {
           case "inbox":
@@ -53,7 +50,6 @@ const App = () => {
       };
 
       const res = await letterApi.get("/letters", {
-        headers: { ...auth },
         params: {
           q: JSON.stringify({
             where: where(cat, currUser),
@@ -90,14 +86,27 @@ const App = () => {
 
   const Create = (props) => <LetterCreate currUser={currUser} {...props} />;
 
+  const Contact = (props) => (
+    <ContactLanding
+      title='Contacts'
+      currUser={currUser}
+      dir={dir}
+      field={field}
+      cat={cat}
+      setCat={setCat}
+      {...props}
+    />
+  );
+
   return (
     <div className='ui container'>
       <BrowserRouter>
         <div>
           <Header currUser={currUser} setCurrUser={setCurrUser} />
           <Route path='/' exact component={Dash} />
+          <Route path='/contacts' exact component={Contact} />
           <Route path='/auth/register' exact component={Register} />
-          <Route path='/:_id' exact component={Detail} />
+          <Route path='/letters/:_id' exact component={Detail} />
           <Route path='/drafts/new' exact component={Create} />
         </div>
       </BrowserRouter>

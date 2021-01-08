@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Header = ({ currUser, setCurrUser, setIsLoggedIn }) => {
+  const [active, setActive] = useState("");
+
   const renderAuth = () => {
     const signOut = () => {
       window.localStorage.removeItem("jwt");
@@ -20,9 +22,19 @@ const Header = ({ currUser, setCurrUser, setIsLoggedIn }) => {
   };
 
   return (
-    <div className='ui secondary pointing menu'>
-      <Link to='/' className='item'>
+    <div className='ui fluid secondary pointing menu'>
+      <Link
+        to='/'
+        className={`header ${active === "dash" ? "active" : ""} item`}
+        onClick={() => setActive("dash")}>
         LovelyLetters
+      </Link>
+
+      <Link
+        to='/contacts'
+        className={`header ${active === "contacts" ? "active" : ""} item`}
+        onClick={() => setActive("contacts")}>
+        Contacts
       </Link>
       <div className='right menu'>{renderAuth()}</div>
     </div>
