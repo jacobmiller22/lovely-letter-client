@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { getEarlierRoute } from "../../utils";
+import { backRoute } from "../../utils";
+import ItemContext from "../../contexts/ItemContext";
 
 import "./LetterDetail.css";
 
 const LetterDetail = ({ letters, match, location }) => {
   const [letter, setLetter] = useState(null);
 
+  const Item = useContext(ItemContext);
+
   useEffect(() => {
-    letters.forEach((letter) => {
+    Item.letters.forEach((letter) => {
       if (letter._id === match.params._id) {
         setLetter(letter);
       }
@@ -43,7 +46,7 @@ const LetterDetail = ({ letters, match, location }) => {
   return (
     <div>
       <Link
-        to={getEarlierRoute(location)}
+        to={{ pathname: backRoute(location), prevRoute: location.pathname }}
         className='ui button'
         id='back-button'>
         Back

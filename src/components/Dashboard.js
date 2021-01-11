@@ -1,16 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import UserContext from "../contexts/UserContext";
+
 import LetterLanding from "./letters/LetterLanding";
 
 import "./Dashboard.css";
-import Login from "./auth/Login";
 
 const Dashboard = ({
   letters,
   location,
-  currUser,
-  setCurrUser,
-  setIsLoggedIn,
   dir,
   setDir,
   field,
@@ -21,24 +19,15 @@ const Dashboard = ({
   const initialValues = { title: "", receiver: "", content: "" };
   const [vals, setVals] = useState(initialValues);
 
+  const User = useContext(UserContext);
+
   const handleChange = ({ target }) => {
     let nam = target.name;
     let val = target.value;
     setVals({ ...vals, [nam]: val });
   };
 
-  const Landing = () => (
-    <LetterLanding
-      letters={letters}
-      title='Letters'
-      dir={dir}
-      setDir={setDir}
-      field={field}
-      setField={setField}
-      cat={cat}
-      setCat={setCat}
-    />
-  );
+  const Landing = () => <LetterLanding title='Letters' />;
 
   const NewLetter = () => {
     return (
@@ -88,22 +77,11 @@ const Dashboard = ({
   };
 
   const renderAuth = () => {
-    if (currUser) {
+    if (User.currUser) {
       return (
         <div className='ui center aligned header'>
-          Welcome, {currUser.username}!
+          Welcome, {User.currUser.username}!
         </div>
-      );
-    } else {
-      return (
-        <>
-          <Login
-            currUser={currUser}
-            setCurrUser={setCurrUser}
-            setIsLoggedIn={setIsLoggedIn}
-          />
-          <div className='ui divider'></div>
-        </>
       );
     }
   };

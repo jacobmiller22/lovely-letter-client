@@ -1,17 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import UserContext from "../contexts/UserContext";
 
-const Header = ({ currUser, setCurrUser, setIsLoggedIn }) => {
+const Header = () => {
   const [active, setActive] = useState("");
+
+  const User = useContext(UserContext);
 
   const renderAuth = () => {
     const signOut = () => {
       window.localStorage.removeItem("jwt");
-      setCurrUser(null);
-      setIsLoggedIn(false);
+      User.setCurrUser(null);
+      User.setIsLoggedIn(false);
     };
 
-    if (currUser) {
+    if (User.currUser) {
       return (
         <Link to='/' className='ui button' onClick={signOut}>
           Logout

@@ -15,6 +15,9 @@ import ContactLanding from "./contacts/ContactLanding";
 
 import user from "../apis/user";
 
+import UserContext from "../contexts/UserContext";
+import ItemContext from "../contexts/ItemContext";
+
 import { decodeJWT } from "../utils";
 import { initLoginCreds } from "../constants";
 
@@ -93,44 +96,17 @@ const App = (props) => {
     })();
   };
 
-  const Dash = (props) => (
-    <Dashboard
-      letters={letters}
-      currUser={currUser}
-      setCurrUser={setCurrUser}
-      setIsLoggedIn={setIsLoggedIn}
-      dir={dir}
-      setDir={setDir}
-      field={field}
-      setField={setField}
-      cat={cat}
-      setCat={setCat}
-      {...props}
-    />
-  );
-  const Detail = (props) => <LetterDetail letters={letters} {...props} />;
+  const Dash = (props) => <Dashboard {...props} />;
+  const Detail = (props) => <LetterDetail {...props} />;
 
   const Create = (props) => <LetterCreate currUser={currUser} {...props} />;
 
-  const Contact = (props) => (
-    <ContactLanding
-      title='Contacts'
-      currUser={currUser}
-      dir={dir}
-      field={field}
-      cat={cat}
-      setCat={setCat}
-      {...props}
-    />
-  );
+  const Contact = (props) => <ContactLanding title='Contacts' {...props} />;
 
   const LandingLogin = (props) => (
     <Login
-      currUser={currUser}
-      setCurrUser={setCurrUser}
       setLoginCreds={setLoginCreds}
       loginCreds={loginCreds}
-      setIsLoggedIn={setIsLoggedIn}
       handleSubmit={login}
       redirect='/dashboard'
       {...props}
@@ -140,29 +116,30 @@ const App = (props) => {
   return (
     <div className='ui container'>
       <BrowserRouter>
-        <SimpleModal
-          open={open}
-          setOpen={setOpen}
-          redirect='/'
-          title='Your session has expired'
-          content='Your session has ended. In order to continue you must be
+        <UserContext.Provider value={{ currUser, setCurrUser, setIsLoggedIn }}>
+          <SimpleModal
+            open={open}
+            setOpen={setOpen}
+            redirect='/'
+            title='Your session has expired'
+            content='Your session has ended. In order to continue you must be
         re-authenticated'
-        />
-        <Switch>
-          <Route exact path='/' component={LandingLogin} />
-          <>
-            <Header
-              currUser={currUser}
-              setCurrUser={setCurrUser}
-              setIsLoggedIn={setIsLoggedIn}
-            />
-            <Route path='/dashboard' exact component={Dash} />
-            <Route path='/contacts' exact component={Contact} />
-            <Route path='/auth/register' exact component={Register} />
-            <Route path='/letters/:_id' exact component={Detail} />
-            <Route path='/drafts/new' exact component={Create} />
-          </>
-        </Switch>
+          />
+          <Switch>
+            <Route exact path='/' component={LandingLogin} />
+            <>
+              <Header />
+              <ItemContext.Provider
+                value={{ letters, dir, setDir, field, setField, cat, setCat }}>
+                <Route path='/dashboard' exact component={Dash} />
+                <Route path='/contacts' exact component={Contact} />
+                <Route path='/letters/:_id' exact component={Detail} />
+              </ItemContext.Provider>
+              <Route path='/auth/register' exact component={Register} />
+              <Route path='/drafts/new' exact component={Create} />
+            </>
+          </Switch>
+        </UserContext.Provider>
       </BrowserRouter>
     </div>
   );

@@ -24,3 +24,9 @@ export const decodeJWT = (token) => {
     return claims;
   }
 };
+
+export const backRoute = (location) => {
+  return location && location.prevRoute
+    ? location.prevRoute
+    : getEarlierRoute(location);
+};
