@@ -7,5 +7,5 @@ const auth = {
 
 export default axios.create({
   baseURL: keys.ll_server,
-  headers: { ...keys.additional_headers, auth },
+  headers: { ...keys.additional_headers, ...auth },
 });
