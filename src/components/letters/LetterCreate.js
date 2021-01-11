@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import LetterForm from "./LetterForm";
 
-import { getEarlierRoute } from "../../utils";
+import { backRoute } from "../../utils";
 
 import lettersApi from "../../apis/letter";
 import { Modal, Icon, Header } from "semantic-ui-react";
@@ -39,13 +39,8 @@ const LetterCreate = ({ location, currUser, history }) => {
     }
   };
 
-  const route =
-    location.state && location.state.prevRoute
-      ? location.state.prevRoute
-      : getEarlierRoute(location);
-
   const to = {
-    pathname: isPristine ? route : location.pathname,
+    pathname: isPristine ? backRoute(location) : location.pathname,
     prevRoute: isPristine
       ? location.pathname
       : location.state
@@ -67,7 +62,7 @@ const LetterCreate = ({ location, currUser, history }) => {
             className='red ui button'
             onClick={() => {
               setOpen(false);
-              history.push(route);
+              history.push(backRoute(location));
             }}>
             <Icon name='remove' /> Discard
           </div>

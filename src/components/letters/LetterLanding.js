@@ -1,32 +1,44 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import ItemContext from "../../contexts/ItemContext";
 
 import ItemList from "../items/ItemList";
 import LetterDetail from "./LetterDetail";
 
-const LetterLanding = ({
-  letters,
-  title,
-  dir,
-  setDir,
-  field,
-  setField,
-  cat,
-  setCat,
-}) => {
+const LetterLanding = ({ title }) => {
+  const Item = useContext(ItemContext);
+
   const handleClick = (e) => {
-    setCat(e.target.name);
+    Item.setCat(e.target.name);
   };
 
   const letterContent = (item) => {
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
+    const date = new Date(item.date);
+
     return (
-      <Link to={`/${item._id}`} className='item' key={item._id}>
+      <Link
+        to={{
+          pathname: `/letters/${item._id}`,
+          prevRoute: window.location.pathname,
+        }}
+        className='item'
+        key={item._id}>
         <div className='middle aligned content' style={{ paddingLeft: "1rem" }}>
-          <div className='ui header'>{item.title}</div>
+          <div className='ui header'>
+            {item.title}
+            <div className='ui sub header'>
+              {date.toLocaleDateString("en-US", options)}
+            </div>
+          </div>
 
           <div className='description'>
-            <strong>To: </strong>
-            {item.receiver} <strong>From: </strong>
+            <strong>From: </strong>
             {item.sender}
           </div>
         </div>
@@ -34,7 +46,7 @@ const LetterLanding = ({
     );
   };
 
-  const detailContent = <LetterDetail content={letters} />;
+  const detailContent = <LetterDetail content={Item.letters} />;
   const FIELDS = [
     { key: "title", text: "Title", value: "title" },
     { key: "date", text: "Date", value: "date" },
@@ -46,7 +58,7 @@ const LetterLanding = ({
         <Link
           to={window.location.pathname}
           role='button'
-          className={`${cat === "inbox" ? "active" : ""} item`}
+          className={`${Item.cat === "inbox" ? "active" : ""} item`}
           data-tab='inbox'
           onClick={handleClick}
           name='inbox'>
@@ -55,7 +67,7 @@ const LetterLanding = ({
         <Link
           to={window.location.pathname}
           role='button'
-          className={`${cat === "sent" ? "active" : ""} item`}
+          className={`${Item.cat === "sent" ? "active" : ""} item`}
           data-tab='sent'
           onClick={handleClick}
           name='sent'>
@@ -64,7 +76,7 @@ const LetterLanding = ({
         <Link
           to={window.location.pathname}
           role='button'
-          className={`${cat === "drafts" ? "active" : ""} item`}
+          className={`${Item.cat === "drafts" ? "active" : ""} item`}
           data-tab='drafts'
           onClick={handleClick}
           name='drafts'>
@@ -73,13 +85,13 @@ const LetterLanding = ({
       </div>
       <ItemList
         title={title}
-        items={letters}
+        items={Item.letters}
         itemContent={letterContent}
         detailContent={detailContent}
-        dir={dir}
-        setDir={setDir}
-        field={field}
-        setField={setField}
+        dir={Item.dir}
+        setDir={Item.setDir}
+        field={Item.field}
+        setField={Item.setField}
         FIELDS={FIELDS}
       />
     </div>

@@ -9,18 +9,17 @@ const Item = ({ item, onItemSelect }) => {
     }
     return;
   };
-console.log(item)
+  console.log(item);
   return (
     <Link
       to={`/${item._id}`}
-      className="item"
+      className='item'
       key={item.id}
-      onClick={() => onItemClick()}
-    >
-      <div className="middle aligned content" style={{ paddingLeft: "2rem" }}>
-        <div className="ui header">{item.data.title}</div>
+      onClick={() => onItemClick()}>
+      <div className='middle aligned content' style={{ paddingLeft: "2rem" }}>
+        <div className='ui header'>{item.data.title}</div>
 
-        <div className="description">
+        <div className='description'>
           <strong>To: </strong>
           {item.recipient} <strong>From: </strong>
           {item.sender}

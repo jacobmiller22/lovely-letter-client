@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-
+import UserContext from "../../contexts/UserContext";
 import { initLoginCreds } from "../../constants";
 
 const Login = ({
-  currUser,
   redirect,
   history,
   setLoginCreds,
@@ -12,6 +11,8 @@ const Login = ({
   handleSubmit,
 }) => {
   const [vals, setVals] = useState(initLoginCreds);
+
+  const User = useContext(UserContext);
 
   const submit = (e) => {
     setLoginCreds(vals);
@@ -24,7 +25,7 @@ const Login = ({
     setVals({ ...vals, [name]: value });
   };
 
-  if (currUser) {
+  if (User.currUser) {
     history.push("/dashboard");
   }
 
