@@ -39,36 +39,37 @@ const LetterLanding = ({
     { key: "title", text: "Title", value: "title" },
     { key: "date", text: "Date", value: "date" },
   ];
+
   return (
     <div className='ui container'>
       <div className='ui three item stackable tabs menu'>
-        <a
-          href='#/'
+        <Link
+          to={window.location.pathname}
           role='button'
           className={`${cat === "inbox" ? "active" : ""} item`}
           data-tab='inbox'
           onClick={handleClick}
           name='inbox'>
           Inbox
-        </a>
-        <a
-          href='#/'
+        </Link>
+        <Link
+          to={window.location.pathname}
           role='button'
           className={`${cat === "sent" ? "active" : ""} item`}
           data-tab='sent'
           onClick={handleClick}
           name='sent'>
           Sent
-        </a>
-        <a
-          href='#/'
+        </Link>
+        <Link
+          to={window.location.pathname}
           role='button'
           className={`${cat === "drafts" ? "active" : ""} item`}
           data-tab='drafts'
           onClick={handleClick}
           name='drafts'>
           Drafts
-        </a>
+        </Link>
       </div>
       <ItemList
         title={title}

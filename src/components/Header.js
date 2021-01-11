@@ -13,9 +13,9 @@ const Header = ({ currUser, setCurrUser, setIsLoggedIn }) => {
 
     if (currUser) {
       return (
-        <button className='ui button' onClick={signOut}>
+        <Link to='/' className='ui button' onClick={signOut}>
           Logout
-        </button>
+        </Link>
       );
     }
     return null;
@@ -24,7 +24,7 @@ const Header = ({ currUser, setCurrUser, setIsLoggedIn }) => {
   return (
     <div className='ui fluid secondary pointing menu'>
       <Link
-        to='/'
+        to='/dashboard'
         className={`header ${active === "dash" ? "active" : ""} item`}
         onClick={() => setActive("dash")}>
         LovelyLetters
