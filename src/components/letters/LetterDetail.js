@@ -5,7 +5,7 @@ import ItemContext from "../../contexts/ItemContext";
 
 import "./LetterDetail.css";
 
-const LetterDetail = ({ letters, match, location }) => {
+const LetterDetail = ({ match, location }) => {
   const [letter, setLetter] = useState(null);
 
   const Item = useContext(ItemContext);
@@ -16,7 +16,7 @@ const LetterDetail = ({ letters, match, location }) => {
         setLetter(letter);
       }
     });
-  }, [letters, match]);
+  }, [Item.letters, match]);
 
   const renderContent = () => {
     if (!letter) {

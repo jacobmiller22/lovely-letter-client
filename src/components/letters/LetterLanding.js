@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ItemContext from "../../contexts/ItemContext";
 
 import ItemList from "../items/ItemList";
