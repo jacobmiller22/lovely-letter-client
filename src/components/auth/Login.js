@@ -1,41 +1,40 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import user from "../../apis/user";
 
-const Login = ({ currUser, setCurrUser, setIsLoggedIn }) => {
-  const initialValues = { username: "", password: "" };
-  const [vals, setVals] = useState(initialValues);
+import { initLoginCreds } from "../../constants";
 
-  const handleChange = ({ target }) => {
-    let nam = target.name;
-    let val = target.value;
-    setVals({ ...vals, [nam]: val });
+const Login = ({
+  currUser,
+  redirect,
+  history,
+  setLoginCreds,
+  loginCreds,
+  handleSubmit,
+}) => {
+  const [vals, setVals] = useState(initLoginCreds);
+
+  const submit = (e) => {
+    setLoginCreds(vals);
+    handleSubmit(e, vals);
+    setVals(initLoginCreds);
+    history.push(redirect);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    (async () => {
-      const res = await user.get("/auth", { params: { user: vals } });
-      console.log(res);
-      if (res.status === 200) {
-        const { token } = res.data;
-        console.log(token);
-        window.localStorage.setItem("jwt", token);
-
-        if (token) {
-          var base64Url = token.split(".")[1];
-          var base64 = base64Url.replace("-", "+").replace("_", "/");
-          var { userClaims } = JSON.parse(window.atob(base64));
-        }
-        setCurrUser(userClaims);
-        setIsLoggedIn(true);
-      }
-    })();
+  const handleChange = ({ target: { name, value } }) => {
+    setVals({ ...vals, [name]: value });
   };
+
+  if (currUser) {
+    history.push("/dashboard");
+  }
+
+  if (!loginCreds) {
+    return null;
+  }
 
   return (
     <div className='auth-window'>
-      <form className='ui form' onSubmit={handleSubmit}>
+      <form className='ui form' onSubmit={submit}>
         <div className='field'>
           <div className='ui input'>
             <input
