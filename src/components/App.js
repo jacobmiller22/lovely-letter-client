@@ -34,7 +34,7 @@ const App = (props) => {
     const localToken = decodeJWT(window.localStorage.getItem("jwt"));
 
     if (!localToken || Date.now() > localToken.exp * 1000) {
-      setOpen(true);
+      if (window.location.pathname !== "/") setOpen(true);
     } else {
       setCurrUser(localToken.user);
     }
