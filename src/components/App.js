@@ -9,10 +9,10 @@ import Register from "./auth/Register";
 import LetterDetail from "./letters/LetterDetail";
 import LetterCreate from "./letters/LetterCreate";
 import SimpleModal from "./modals/SimpleModal";
+import ContactLanding from "./contacts/ContactLanding";
+import LandingLogin from "./LandingLogin";
 
 import letterApi from "../apis/letter";
-import ContactLanding from "./contacts/ContactLanding";
-
 import user from "../apis/user";
 
 import UserContext from "../contexts/UserContext";
@@ -30,8 +30,6 @@ const App = (props) => {
   const [cat, setCat] = useState("inbox");
   const [isLoading, setIsLoading] = useState(true);
 
-  const [loginCreds, setLoginCreds] = useState(initLoginCreds);
-
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -45,6 +43,7 @@ const App = (props) => {
   }, [isLoggedIn]);
 
   useEffect(() => {
+    console.log("curr User");
     const fetchLetters = async () => {
       const where = (cat, user) => {
         switch (cat) {
@@ -80,39 +79,13 @@ const App = (props) => {
     }
   }, [currUser, dir, field, cat]);
 
-  const login = (e, vals) => {
-    if (e) e.preventDefault();
-
-    (async () => {
-      if (vals !== initLoginCreds) {
-        const res = await user.get("/auth", { params: { user: vals } });
-
-        if (res.status === 200) {
-          const { token } = res.data;
-          window.localStorage.setItem("jwt", token);
-          const { user } = decodeJWT(token);
-          setCurrUser(user);
-        }
-      }
-    })();
-  };
-
   const Dash = (props) => <Dashboard {...props} />;
+
   const Detail = (props) => <LetterDetail {...props} />;
 
   const Create = (props) => <LetterCreate currUser={currUser} {...props} />;
 
   const Contact = (props) => <ContactLanding title='Contacts' {...props} />;
-
-  const LandingLogin = (props) => (
-    <Login
-      setLoginCreds={setLoginCreds}
-      loginCreds={loginCreds}
-      handleSubmit={login}
-      redirect='/dashboard'
-      {...props}
-    />
-  );
 
   const authButton = (
     <Link to='/' className='ui button' onClick={() => setOpen(false)}>
@@ -121,7 +94,7 @@ const App = (props) => {
   );
 
   return (
-    <div className='ui container'>
+    <div>
       <BrowserRouter>
         <UserContext.Provider value={{ currUser, setCurrUser, setIsLoggedIn }}>
           <SimpleModal

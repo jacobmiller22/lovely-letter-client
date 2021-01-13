@@ -1,24 +1,22 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import UserContext from "../../contexts/UserContext";
 import { initLoginCreds } from "../../constants";
 
-const Login = ({
-  redirect,
-  history,
-  setLoginCreds,
-  loginCreds,
-  handleSubmit,
-}) => {
+import "./Auth.css";
+
+const Login = ({ handleSubmit, signup }) => {
   const [vals, setVals] = useState(initLoginCreds);
+  const [remember, setRemember] = useState(
+    window.localStorage.getItem("remember") !== undefined
+  );
 
   const User = useContext(UserContext);
+  let history = useHistory();
 
   const submit = (e) => {
-    setLoginCreds(vals);
     handleSubmit(e, vals);
     setVals(initLoginCreds);
-    history.push(redirect);
   };
 
   const handleChange = ({ target: { name, value } }) => {
@@ -29,42 +27,64 @@ const Login = ({
     history.push("/dashboard");
   }
 
-  if (!loginCreds) {
-    return null;
-  }
-
-  return (
-    <div className='auth-window'>
-      <form className='ui form' onSubmit={submit}>
-        <div className='field'>
-          <div className='ui input'>
-            <input
-              name='username'
-              type='text'
-              placeholder='Username'
-              value={vals.username}
-              onChange={handleChange}
-            />
-          </div>
-        </div>
-
-        <div className='field'>
-          <div className='ui labeled input'>
-            <input
-              name='password'
-              type='password'
-              placeholder='Password'
-              value={vals.password}
-              onChange={handleChange}
-            />
-          </div>
-        </div>
-        <div>
+  const renderSignUp = () => {
+    if (signup) {
+      return (
+        <>
           <button className='ui button' type='submit'>
             Login
           </button>
           {"Or,  "}
           <Link to={{ pathname: "/auth/register" }}> Sign Up</Link>
+        </>
+      );
+    }
+    return null;
+  };
+
+  return (
+    <div className='auth-window'>
+      <form className='ui form' onSubmit={submit}>
+        <div className='field'>
+          <input
+            name='username'
+            type='text'
+            placeholder='Username'
+            value={vals.username}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className='field'>
+          <input
+            name='password'
+            type='password'
+            placeholder='Password'
+            value={vals.password}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div>{renderSignUp()}</div>
+
+        <div>
+          <div className={`options ui ${remember ? "checked" : ""} checkbox`}>
+            <input
+              type='checkbox'
+              name='remember'
+              value={remember}
+              onClick={() => setRemember(!remember)}
+            />
+            <label>Remember me</label>
+          </div>
+          <Link to={{ pathname: "" }} className='pull-right'>
+            Forgot password?
+          </Link>
+        </div>
+        <div>
+          <button className='ui button login' type='submit'>
+            Login
+          </button>
         </div>
       </form>
     </div>

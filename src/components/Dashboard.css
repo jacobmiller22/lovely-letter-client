@@ -1,12 +1,13 @@
 .left-side-content {
-  max-width: 40vw;
+  max-width: 50vw;
+  height: 100vh;
+  margin-left: 0px !important;
   flex-direction: column;
   padding: 10px;
 }
 
 #dashboard {
   display: flex;
-  
 }
 
 .right-side-content {
