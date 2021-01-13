@@ -1,11 +1,18 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+
 import ItemContext from "../../contexts/ItemContext";
 
 import ItemList from "../items/ItemList";
+import SimpleModal from "../modals/SimpleModal";
 import LetterDetail from "./LetterDetail";
 
-const LetterLanding = ({ title }) => {
+import letterApi from "../../apis/letter";
+
+import "./LetterLanding.css";
+
+const LetterLanding = ({ title, history }) => {
+  const [open, setOpen] = useState(false);
   const Item = useContext(ItemContext);
 
   const handleClick = (e) => {
@@ -21,25 +28,70 @@ const LetterLanding = ({ title }) => {
     };
     const date = new Date(item.date);
 
+    if (!item) {
+      console.log("Does this run?");
+      return (
+        <div className='item'>
+          <div className='fluid placeholder header'></div>
+          <div className='very long line'></div>
+          <div className='medium line'></div>
+          <div className='short line'></div>
+        </div>
+      );
+    }
+
+    const handleDelete = () => {
+      letterApi.delete();
+    };
+
+    const subject = Item.cat === "sent" ? item.receiver : item.sender;
+    const cancelButton = <div className='ui button'>Cancel</div>;
+    const deleteButton = (
+      <div className='ui red button' onClick={handleDelete}>
+        Delete
+      </div>
+    );
+
     return (
       <Link
         to={{
           pathname: `/letters/${item._id}`,
           prevRoute: window.location.pathname,
         }}
-        className='item'
+        className='ui fluid item'
         key={item._id}>
-        <div className='middle aligned content' style={{ paddingLeft: "1rem" }}>
-          <div className='ui header'>
-            {item.title}
-            <div className='ui sub header'>
-              {date.toLocaleDateString("en-US", options)}
-            </div>
-          </div>
+        <SimpleModal
+          open={open}
+          setOpen={setOpen}
+          title='Delete Letter?'
+          content='Are you sure you want to delete this letter? Any deleted letters will not be recoverable'
+          actions={[cancelButton, deleteButton]}
+        />
+        <div className='ui container'>
+          <div className='ui right floated sub header'>{subject}</div>
+          <div
+            className='middle aligned content'
+            style={{ paddingLeft: "1rem" }}>
+            <div className='ui header'>
+              {item.title}
 
-          <div className='description'>
-            <strong>From: </strong>
-            {item.sender}
+              <div className='ui sub header'>
+                {date.toLocaleDateString("en-US", options)}
+              </div>
+            </div>
+            <div
+              className='extra ui right floated icon button'
+              onClick={(e) => {
+                e.preventDefault();
+                setOpen(true);
+                history.push(window.location.pathname);
+              }}>
+              <i className='ui red trash alternate outline icon' />
+            </div>
+            <div className='description'>
+              <strong>From: </strong>
+              {item.sender}
+            </div>
           </div>
         </div>
       </Link>
@@ -51,6 +103,9 @@ const LetterLanding = ({ title }) => {
     { key: "title", text: "Title", value: "title" },
     { key: "date", text: "Date", value: "date" },
   ];
+
+  if (!Item.letters && Item.isLoading) {
+  }
 
   return (
     <div className='ui container'>

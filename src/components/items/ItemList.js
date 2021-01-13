@@ -4,6 +4,8 @@ import Item from "./Item";
 import ItemDetail from "./ItemDetail";
 import { Dropdown } from "semantic-ui-react";
 
+import { renderPlaceholder } from "../../utils";
+
 const ItemList = ({
   items,
   dir,
@@ -43,16 +45,20 @@ const ItemList = ({
       }
       if (!items.length) {
         return (
-          <div className='ui item'>
-            <p className='ui centered content'>
-              No {title.toLowerCase()} here..
-            </p>
-          </div>
+          <>
+            <div className='ui rasied segment'>{renderPlaceholder()}</div>
+            <div className='ui rasied segment'>{renderPlaceholder()}</div>
+            <div className='ui rasied segment'>{renderPlaceholder()}</div>
+          </>
         );
       }
 
       return items.map((item) => {
-        return itemContent(item, onItemSelect);
+        return (
+          <div className='ui raised segment'>
+            {itemContent(item, onItemSelect)}
+          </div>
+        );
       });
     }
 
@@ -75,25 +81,23 @@ const ItemList = ({
   };
 
   return (
-    <div>
-      <div className='ui  container'>
-        <div className='ui left floated large header'>{title}</div>
-        <div className='ui content'>
-          <button
-            className='ui circular icon button'
-            onClick={() => setDir(dir === "ASC" ? "DESC" : "ASC")}>
-            {renderArrow()}
-          </button>
-          <Dropdown
-            placeholder='Sort by:'
-            selection
-            options={FIELDS}
-            onChange={(e, { value }) => setField(value)}
-            value={field}
-          />
-        </div>
+    <div className='ui container'>
+      <div className='ui left floated large header'>{title}</div>
+      <div className='ui content'>
+        <button
+          className='ui circular icon button'
+          onClick={() => setDir(dir === "ASC" ? "DESC" : "ASC")}>
+          {renderArrow()}
+        </button>
+        <Dropdown
+          placeholder='Sort by:'
+          selection
+          options={FIELDS}
+          onChange={(e, { value }) => setField(value)}
+          value={field}
+        />
       </div>
-      {renderFocusDetail()}
+      <div className='ui list'>{renderFocusDetail()}</div>
     </div>
   );
 };

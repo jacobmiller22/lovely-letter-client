@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 
 import Header from "./Header";
 import Login from "./auth/Login";
@@ -28,6 +28,7 @@ const App = (props) => {
   const [dir, setDir] = useState("DESC");
   const [field, setField] = useState("date");
   const [cat, setCat] = useState("inbox");
+  const [isLoading, setIsLoading] = useState(true);
 
   const [loginCreds, setLoginCreds] = useState(initLoginCreds);
 
@@ -50,7 +51,7 @@ const App = (props) => {
           case "inbox":
             return { receiver: user.username };
           case "sent":
-            return { sender: user.username };
+            return { sender: user.username, isDraft: false };
           case "drafts":
             return { sender: user.username, isDraft: true };
           default:
@@ -113,6 +114,12 @@ const App = (props) => {
     />
   );
 
+  const authButton = (
+    <Link to='/' className='ui button' onClick={() => setOpen(false)}>
+      Ok
+    </Link>
+  );
+
   return (
     <div className='ui container'>
       <BrowserRouter>
@@ -120,17 +127,26 @@ const App = (props) => {
           <SimpleModal
             open={open}
             setOpen={setOpen}
-            redirect='/'
             title='Your session has expired'
             content='Your session has ended. In order to continue you must be
         re-authenticated'
+            actions={[authButton]}
           />
           <Switch>
             <Route exact path='/' component={LandingLogin} />
             <>
               <Header />
               <ItemContext.Provider
-                value={{ letters, dir, setDir, field, setField, cat, setCat }}>
+                value={{
+                  letters,
+                  dir,
+                  setDir,
+                  field,
+                  setField,
+                  cat,
+                  setCat,
+                  isLoading,
+                }}>
                 <Route path='/dashboard' exact component={Dash} />
                 <Route path='/contacts' exact component={Contact} />
                 <Route path='/letters/:_id' exact component={Detail} />

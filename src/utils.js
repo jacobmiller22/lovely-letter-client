@@ -30,3 +30,18 @@ export const backRoute = (location) => {
     ? location.prevRoute
     : getEarlierRoute(location);
 };
+
+export const renderPlaceholder = () => {
+  return (
+    <div className='ui placeholder'>
+      <div className='ui header'>
+        <div className='large line'></div>
+      </div>
+      <div className='ui paragraph'>
+        <div className='large line'></div>
+        <div className='medium line'></div>
+        <div className='large line'></div>
+      </div>
+    </div>
+  );
+};

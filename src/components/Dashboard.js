@@ -6,16 +6,9 @@ import LetterLanding from "./letters/LetterLanding";
 
 import "./Dashboard.css";
 
-const Dashboard = ({
-  letters,
-  location,
-  dir,
-  setDir,
-  field,
-  setField,
-  cat,
-  setCat,
-}) => {
+const Dashboard = (props) => {
+  const { location } = props;
+
   const initialValues = { title: "", receiver: "", content: "" };
   const [vals, setVals] = useState(initialValues);
 
@@ -27,7 +20,7 @@ const Dashboard = ({
     setVals({ ...vals, [nam]: val });
   };
 
-  const Landing = () => <LetterLanding title='Letters' />;
+  const Landing = () => <LetterLanding title='Letters' {...props} />;
 
   const NewLetter = () => {
     return (
