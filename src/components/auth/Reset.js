@@ -1,15 +1,11 @@
 import React, { useState, useContext } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import UserContext from "../../contexts/UserContext";
-// import { initLoginCreds } from "../../constants";
 
 import "./Auth.css";
 
-const Auth = ({ handleSubmit, signup, init, action }) => {
+const Login = ({ handleSubmit, signup, init }) => {
   const [vals, setVals] = useState(init);
-  const [remember, setRemember] = useState(
-    window.localStorage.getItem("remember") !== undefined
-  );
 
   const User = useContext(UserContext);
   let history = useHistory();
@@ -42,47 +38,14 @@ const Auth = ({ handleSubmit, signup, init, action }) => {
   //   return null;
   // };
 
-  // const renderOptions = () => {
-  //   return (
-  //     <>
-  //       <div className={`options ui ${remember ? "checked" : ""} checkbox`}>
-  //         <input
-  //           type='checkbox'
-  //           name='remember'
-  //           value={remember}
-  //           onClick={() => setRemember(!remember)}
-  //         />
-  //         <label>Remember me</label>
-  //       </div>
-  //       <Link to={{ pathname: "/auth/reset" }} className='pull-right'>
-  //         Forgot password?
-  //       </Link>
-  //     </>
-  //   );
-  // };
-
-  const renderAction = () => {
-    if (action) {
-      <button className='ui button login' type='submit'>
-        Reset Password
-      </button>;
-    }
-
-    return (
-      <button className='ui button login' type='submit'>
-        Login
-      </button>
-    );
-  };
-
   return (
     <div className='auth-window'>
       <form className='ui form' onSubmit={submit}>
         <div className='field'>
           <input
-            name='username'
+            name='username_email'
             type='text'
-            placeholder='Username'
+            placeholder='Username/Email'
             value={vals.username}
             onChange={handleChange}
           />
@@ -100,12 +63,28 @@ const Auth = ({ handleSubmit, signup, init, action }) => {
 
         {/* <div>{renderSignUp()}</div> */}
 
-        {/* <div>{renderOptions()}</div> */}
-
-        <div>{renderAction()}</div>
+        {/* <div>
+          <div className={`options ui ${remember ? "checked" : ""} checkbox`}>
+            <input
+              type='checkbox'
+              name='remember'
+              value={remember}
+              onClick={() => setRemember(!remember)}
+            />
+            <label>Remember me</label>
+          </div>
+          <Link to={{ pathname: "/auth/reset" }} className='pull-right'>
+            Forgot password?
+          </Link>
+        </div> */}
+        <div>
+          <button className='ui button login' type='submit'>
+            Reset Password
+          </button>
+        </div>
       </form>
     </div>
   );
 };
 
-export default Auth;
+export default Login;

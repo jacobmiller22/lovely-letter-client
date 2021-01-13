@@ -3,6 +3,8 @@ import { Link, useHistory } from "react-router-dom";
 import UserContext from "../../contexts/UserContext";
 // import { initLoginCreds } from "../../constants";
 
+import _ from "lodash";
+
 import "./Auth.css";
 
 const Auth = ({ handleSubmit, signup, init, action }) => {
@@ -27,39 +29,39 @@ const Auth = ({ handleSubmit, signup, init, action }) => {
     history.push("/dashboard");
   }
 
-  // const renderSignUp = () => {
-  //   if (signup) {
-  //     return (
-  //       <>
-  //         <button className='ui button' type='submit'>
-  //           Login
-  //         </button>
-  //         {"Or,  "}
-  //         <Link to={{ pathname: "/auth/register" }}> Sign Up</Link>
-  //       </>
-  //     );
-  //   }
-  //   return null;
-  // };
+  const renderSignUp = () => {
+    if (signup) {
+      return (
+        <>
+          <button className='ui button' type='submit'>
+            Login
+          </button>
+          {"Or,  "}
+          <Link to={{ pathname: "/auth/register" }}> Sign Up</Link>
+        </>
+      );
+    }
+    return null;
+  };
 
-  // const renderOptions = () => {
-  //   return (
-  //     <>
-  //       <div className={`options ui ${remember ? "checked" : ""} checkbox`}>
-  //         <input
-  //           type='checkbox'
-  //           name='remember'
-  //           value={remember}
-  //           onClick={() => setRemember(!remember)}
-  //         />
-  //         <label>Remember me</label>
-  //       </div>
-  //       <Link to={{ pathname: "/auth/reset" }} className='pull-right'>
-  //         Forgot password?
-  //       </Link>
-  //     </>
-  //   );
-  // };
+  const renderOptions = () => {
+    return (
+      <>
+        <div className={`options ui ${remember ? "checked" : ""} checkbox`}>
+          <input
+            type='checkbox'
+            name='remember'
+            value={remember}
+            onClick={() => setRemember(!remember)}
+          />
+          <label>Remember me</label>
+        </div>
+        <Link to={{ pathname: "/auth/reset" }} className='pull-right'>
+          Forgot password?
+        </Link>
+      </>
+    );
+  };
 
   const renderAction = () => {
     if (action) {
@@ -73,6 +75,15 @@ const Auth = ({ handleSubmit, signup, init, action }) => {
         Login
       </button>
     );
+  };
+
+  const renderFields = () => {
+    return _.map(fields, (field) => {
+      switch (field) {
+      
+        default
+      }
+    });
   };
 
   return (

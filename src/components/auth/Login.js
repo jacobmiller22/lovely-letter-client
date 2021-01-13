@@ -77,7 +77,7 @@ const Login = ({ handleSubmit, signup }) => {
             />
             <label>Remember me</label>
           </div>
-          <Link to={{ pathname: "" }} className='pull-right'>
+          <Link to={{ pathname: "/auth/reset" }} className='pull-right'>
             Forgot password?
           </Link>
         </div>

@@ -1,18 +1,18 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
-import UserContext from "../contexts/UserContext";
+import UserContext from "../../contexts/UserContext";
 
-import Login from "./auth/Login";
+import Login from "./Login";
 
-import user from "../apis/user";
+import user from "../../apis/user";
 
-import { initLoginCreds } from "../constants";
-import { decodeJWT } from "../utils";
+import { initLoginCreds } from "../../constants";
+import { decodeJWT } from "../../utils";
 
 import "./LandingLogin.css";
 
 const LandingLogin = () => {
-  const [showError, setShowError] = useState(null);
+  // const [showError, setShowError] = useState(null);
 
   const User = useContext(UserContext);
 
@@ -33,6 +33,7 @@ const LandingLogin = () => {
           User.setCurrUser(user);
           history.push("/dashboard");
         } else {
+          // setShowError(res.status);
           console.error(res.status);
         }
       }
@@ -40,9 +41,9 @@ const LandingLogin = () => {
   };
 
   const renderContent = () => {
-    if (showError) {
-      return <div>THERE HAS BEEN AN ERROR</div>;
-    }
+    // if (showError) {
+    //   return <div>THERE HAS BEEN AN ERROR</div>;
+    // }
     return (
       <>
         <span className='left-side-content'>

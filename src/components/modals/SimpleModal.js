@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+
 import { Modal } from "semantic-ui-react";
 
 import _ from "lodash";

@@ -3,23 +3,21 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 
 import Header from "./Header";
-import Login from "./auth/Login";
 import Dashboard from "./Dashboard";
 import Register from "./auth/Register";
 import LetterDetail from "./letters/LetterDetail";
 import LetterCreate from "./letters/LetterCreate";
 import SimpleModal from "./modals/SimpleModal";
 import ContactLanding from "./contacts/ContactLanding";
-import LandingLogin from "./LandingLogin";
+import LandingLogin from "./auth/LandingLogin";
+import LandingReset from "./auth/LandingReset";
 
 import letterApi from "../apis/letter";
-import user from "../apis/user";
 
 import UserContext from "../contexts/UserContext";
 import ItemContext from "../contexts/ItemContext";
 
 import { decodeJWT } from "../utils";
-import { initLoginCreds } from "../constants";
 
 const App = (props) => {
   const [letters, setLetters] = useState([]);
@@ -88,7 +86,7 @@ const App = (props) => {
   const Contact = (props) => <ContactLanding title='Contacts' {...props} />;
 
   const authButton = (
-    <Link to='/' className='ui button' onClick={() => setOpen(false)}>
+    <Link key='ok' to='/' className='ui button' onClick={() => setOpen(false)}>
       Ok
     </Link>
   );
@@ -107,6 +105,7 @@ const App = (props) => {
           />
           <Switch>
             <Route exact path='/' component={LandingLogin} />
+            <Route exact path='/auth/reset' component={LandingReset} />
             <>
               <Header />
               <ItemContext.Provider
@@ -119,6 +118,7 @@ const App = (props) => {
                   cat,
                   setCat,
                   isLoading,
+                  setIsLoading,
                 }}>
                 <Route path='/dashboard' exact component={Dash} />
                 <Route path='/contacts' exact component={Contact} />
