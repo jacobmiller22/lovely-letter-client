@@ -26,7 +26,8 @@ const LetterLanding = ({ title, history }) => {
       month: "long",
       day: "numeric",
     };
-    const date = new Date(item.date);
+
+    const date = new Date(item.dateSent);
 
     if (!item) {
       console.log("Does this run?");
@@ -45,9 +46,13 @@ const LetterLanding = ({ title, history }) => {
     };
 
     const subject = Item.cat === "sent" ? item.receiver : item.sender;
-    const cancelButton = <div className='ui button'>Cancel</div>;
+    const cancelButton = (
+      <div key='cancel' className='ui button'>
+        Cancel
+      </div>
+    );
     const deleteButton = (
-      <div className='ui red button' onClick={handleDelete}>
+      <div key='delete' className='ui red button' onClick={handleDelete}>
         Delete
       </div>
     );
@@ -90,7 +95,7 @@ const LetterLanding = ({ title, history }) => {
             </div>
             <div className='description'>
               <strong>From: </strong>
-              {item.sender}
+              {item._sender.username}
             </div>
           </div>
         </div>
@@ -101,7 +106,7 @@ const LetterLanding = ({ title, history }) => {
   const detailContent = <LetterDetail content={Item.letters} />;
   const FIELDS = [
     { key: "title", text: "Title", value: "title" },
-    { key: "date", text: "Date", value: "date" },
+    { key: "dateSent", text: "Date", value: "dateSent" },
   ];
 
   if (!Item.letters && Item.isLoading) {

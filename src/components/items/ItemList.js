@@ -54,6 +54,7 @@ const ItemList = ({
       }
 
       return items.map((item) => {
+        console.log(item);
         return (
           <div className='ui raised segment'>
             {itemContent(item, onItemSelect)}
@@ -66,6 +67,7 @@ const ItemList = ({
       return <div className='ui centered subheader'>No items here..</div>;
     }
     return items.map((item) => {
+      console.log(item);
       return <Item item={item} onItemSelect={onItemSelect} key={item._id} />;
     });
   };

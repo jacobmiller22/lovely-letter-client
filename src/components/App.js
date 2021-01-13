@@ -24,7 +24,7 @@ const App = (props) => {
   const [currUser, setCurrUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [dir, setDir] = useState("DESC");
-  const [field, setField] = useState("date");
+  const [field, setField] = useState("dateSent");
   const [cat, setCat] = useState("inbox");
   const [isLoading, setIsLoading] = useState(true);
 
@@ -46,13 +46,13 @@ const App = (props) => {
       const where = (cat, user) => {
         switch (cat) {
           case "inbox":
-            return { receiver: user.username };
+            return { _receiver: user.username };
           case "sent":
-            return { sender: user.username, isDraft: false };
+            return { _sender: user.username, isDraft: false };
           case "drafts":
-            return { sender: user.username, isDraft: true };
+            return { _sender: user.username, isDraft: true };
           default:
-            return { receiver: user.username };
+            return { _receiver: user.username };
         }
       };
 
