@@ -109,9 +109,6 @@ const LetterLanding = ({ title, history }) => {
     { key: "dateSent", text: "Date", value: "dateSent" },
   ];
 
-  if (!Item.letters && Item.isLoading) {
-  }
-
   return (
     <div className='ui container'>
       <div className='ui three item stackable tabs menu'>

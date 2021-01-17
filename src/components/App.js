@@ -17,7 +17,7 @@ import letterApi from "../apis/letter";
 import UserContext from "../contexts/UserContext";
 import ItemContext from "../contexts/ItemContext";
 
-import { decodeJWT } from "../utils";
+import { decodeJWT, routeRequiresAuth } from "../utils";
 
 const App = (props) => {
   const [letters, setLetters] = useState([]);
@@ -33,15 +33,17 @@ const App = (props) => {
   useEffect(() => {
     const localToken = decodeJWT(window.localStorage.getItem("jwt"));
 
-    if (!localToken || Date.now() > localToken.exp * 1000) {
-      if (window.location.pathname !== "/") setOpen(true);
+    if (
+      routeRequiresAuth(window) &&
+      (!localToken || Date.now() > localToken.exp * 1000)
+    ) {
+      setOpen(true);
     } else {
-      setCurrUser(localToken.user);
+      if (localToken) setCurrUser(localToken.user);
     }
   }, [isLoggedIn]);
 
   useEffect(() => {
-    console.log("curr User");
     const fetchLetters = async () => {
       const where = (cat, user) => {
         switch (cat) {

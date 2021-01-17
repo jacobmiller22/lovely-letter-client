@@ -80,7 +80,7 @@ const Dashboard = (props) => {
   };
 
   return (
-    <div>
+    <div className='ui container'>
       <div className='ui two column very relaxed stackable grid'>
         <div className='column'>
           {renderAuth()}

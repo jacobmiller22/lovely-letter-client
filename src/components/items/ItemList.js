@@ -54,9 +54,8 @@ const ItemList = ({
       }
 
       return items.map((item) => {
-        console.log(item);
         return (
-          <div className='ui raised segment'>
+          <div key={item._id} className='ui raised segment'>
             {itemContent(item, onItemSelect)}
           </div>
         );

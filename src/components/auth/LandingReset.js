@@ -13,8 +13,9 @@ const LandingReset = () => {
 
     (async () => {
       if (vals !== initResetCreds) {
-        const res = await user.get("/auth/reset/password", {
-          params: { user: vals },
+        console.log(vals);
+        const res = await user.post("/auth/reset", {
+          username_email: vals.username_email,
         });
         if (res.status === 200) {
           // const { token } = res.data;
@@ -34,6 +35,9 @@ const LandingReset = () => {
     <>
       <Link to='/'></Link>
       <span className='right-side-content'>
+        <Link to={{ pathname: "/" }} className='back ui button'>
+          Back
+        </Link>
         <div className='devise'>
           <h1 className='ui centered header'>Reset Password</h1>
           <div className='register-remarks description'>

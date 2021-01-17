@@ -1,3 +1,5 @@
+import { noAuthRoutes } from "./constants";
+
 export const getEarlierRoute = (location) => {
   const currRoute = location.pathname.substring(
     location.pathname.lastIndexOf("/"),
@@ -11,7 +13,7 @@ export const getEarlierRoute = (location) => {
 };
 
 export const decodeJWT = (token) => {
-  if (token) {
+  if (token && token !== "undefined") {
     let base64Url = token.split(".")[1];
     let base64 = base64Url.replace("-", "+").replace("_", "/");
     const claims = JSON.parse(window.atob(base64));
@@ -44,4 +46,8 @@ export const renderPlaceholder = () => {
       </div>
     </div>
   );
+};
+
+export const routeRequiresAuth = (win) => {
+  return !noAuthRoutes.includes(win.location.pathname);
 };

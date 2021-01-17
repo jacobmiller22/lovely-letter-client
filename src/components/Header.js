@@ -2,6 +2,8 @@ import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 
+import "./Header.css";
+
 const Header = () => {
   const [active, setActive] = useState("");
 
@@ -16,30 +18,40 @@ const Header = () => {
 
     if (User.currUser) {
       return (
-        <Link to='/' className='ui button' onClick={signOut}>
-          Logout
-        </Link>
+        <div className='menu-item'>
+          <Link to='/' className='ui header item button' onClick={signOut}>
+            Logout
+          </Link>
+        </div>
       );
     }
     return null;
   };
 
   return (
-    <div className='ui fluid secondary pointing menu'>
-      <Link
-        to='/dashboard'
-        className={`header ${active === "dash" ? "active" : ""} item`}
-        onClick={() => setActive("dash")}>
-        LovelyLetters
-      </Link>
+    <div className='menu-container'>
+      <div className='ui fluid secondary pointing menu'>
+        <div className='menu-item'>
+          <Link
+            to='/dashboard'
+            className={`ui header${active === "dash" ? " active" : ""} item`}
+            onClick={() => setActive("dash")}>
+            LovelyLetters
+          </Link>
+        </div>
 
-      <Link
-        to='/contacts'
-        className={`header ${active === "contacts" ? "active" : ""} item`}
-        onClick={() => setActive("contacts")}>
-        Contacts
-      </Link>
-      <div className='right menu'>{renderAuth()}</div>
+        <div className='menu-item'>
+          <Link
+            to='/contacts'
+            className={`ui header ${
+              active === "contacts" ? "active" : ""
+            } item`}
+            onClick={() => setActive("contacts")}>
+            Contacts
+          </Link>
+        </div>
+        <div className='right menu'>{renderAuth()}</div>
+      </div>
     </div>
   );
 };

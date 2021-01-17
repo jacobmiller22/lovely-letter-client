@@ -51,16 +51,6 @@ const Login = ({ handleSubmit, signup, init }) => {
           />
         </div>
 
-        <div className='field'>
-          <input
-            name='password'
-            type='password'
-            placeholder='Password'
-            value={vals.password}
-            onChange={handleChange}
-          />
-        </div>
-
         {/* <div>{renderSignUp()}</div> */}
 
         {/* <div>

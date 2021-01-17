@@ -1,0 +1,20 @@
+.menu-container {
+  background-color: #08415c;
+  margin-bottom: 15px;
+  padding: 10px
+  
+}
+
+.menu-item a{
+  color: #fff !important
+}
+
+.ui.secondary.pointing.menu .header.item {
+  color: #71c9f1 !important;
+  
+}
+
+.ui.secondary.pointing.menu .header.item :hover {
+  color: #fff;
+  opacity: 1;
+}

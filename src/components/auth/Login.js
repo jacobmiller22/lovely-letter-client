@@ -7,6 +7,7 @@ import "./Auth.css";
 
 const Login = ({ handleSubmit, signup }) => {
   const [vals, setVals] = useState(initLoginCreds);
+  const [state, setState] = useState({});
   const [remember, setRemember] = useState(
     window.localStorage.getItem("remember") !== undefined
   );
@@ -15,8 +16,11 @@ const Login = ({ handleSubmit, signup }) => {
   let history = useHistory();
 
   const submit = (e) => {
-    handleSubmit(e, vals);
-    setVals(initLoginCreds);
+    handleSubmit(e, vals, setState);
+    console.log(state);
+    if (state.type !== "error") {
+      setVals(initLoginCreds);
+    }
   };
 
   const handleChange = ({ target: { name, value } }) => {
@@ -44,7 +48,7 @@ const Login = ({ handleSubmit, signup }) => {
 
   return (
     <div className='auth-window'>
-      <form className='ui form' onSubmit={submit}>
+      <form className={`ui form ${state.type}`} onSubmit={submit}>
         <div className='field'>
           <input
             name='username'
@@ -63,6 +67,16 @@ const Login = ({ handleSubmit, signup }) => {
             value={vals.password}
             onChange={handleChange}
           />
+        </div>
+
+        <div class='ui error message'>
+          <div class='header'>Error!</div>
+          <p>{state.msg}</p>
+        </div>
+
+        <div class='ui success message'>
+          <div class='header'>success!</div>
+          <p>{state.msg}</p>
         </div>
 
         <div>{renderSignUp()}</div>

@@ -18,23 +18,37 @@ const LandingLogin = () => {
 
   let history = useHistory();
 
-  const login = (e, vals) => {
+  const login = (e, vals, setState) => {
     console.log(vals);
     if (e) e.preventDefault();
 
     (async () => {
       if (vals !== initLoginCreds) {
-        const res = await user.get("/auth", { params: { user: vals } });
+        console.log("xd");
+        const res = await user
+          .get("/auth", { params: { user: vals } })
+          .catch((err) => {
+            console.log("error", err.response);
+            const code = err.response.status;
 
-        if (res.status === 200) {
+            switch (code) {
+              case 401:
+                console.log("settings state");
+                setState({ type: "error", msg: "Invalid credentials" });
+                return;
+              default:
+                return;
+            }
+          });
+        if (res) {
           const { token } = res.data;
           window.localStorage.setItem("jwt", token);
           const { user } = decodeJWT(token);
           User.setCurrUser(user);
           history.push("/dashboard");
-        } else {
-          // setShowError(res.status);
-          console.error(res.status);
+
+          if (res.status === 200)
+            setState({ type: "success", msg: "Login successful" });
         }
       }
     })();
