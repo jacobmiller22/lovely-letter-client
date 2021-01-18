@@ -69,13 +69,13 @@ const Login = ({ handleSubmit, signup }) => {
           />
         </div>
 
-        <div class='ui error message'>
-          <div class='header'>Error!</div>
+        <div className='ui error message'>
+          <div className='header'>Error!</div>
           <p>{state.msg}</p>
         </div>
 
-        <div class='ui success message'>
-          <div class='header'>success!</div>
+        <div className='ui success message'>
+          <div className='header'>success!</div>
           <p>{state.msg}</p>
         </div>
 

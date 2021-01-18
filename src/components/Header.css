@@ -1,7 +1,7 @@
 .menu-container {
   background-color: #08415c;
   margin-bottom: 15px;
-  padding: 10px
+  
   
 }
 
@@ -17,4 +17,13 @@
 .ui.secondary.pointing.menu .header.item :hover {
   color: #fff;
   opacity: 1;
+}
+
+.ui.icons.menu-item {
+  transform: translateY(25px);
+  color:#71c9f1
+}
+
+.drop-down {
+  transform: translateY(-12px);
 }

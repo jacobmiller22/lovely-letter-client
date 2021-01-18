@@ -25,6 +25,7 @@ const Dashboard = (props) => {
   const NewLetter = () => {
     return (
       <form className='ui form' onSubmit={handleChange}>
+        <h3 className='ui header'>Quick Compose</h3>
         <div className='field'>
           <div className='ui labeled input'>
             <div className='ui label'>Title:</div>
@@ -72,9 +73,9 @@ const Dashboard = (props) => {
   const renderAuth = () => {
     if (User.currUser) {
       return (
-        <div className='ui center aligned header'>
+        <h2 className='ui center aligned header'>
           Welcome, {User.currUser.username}!
-        </div>
+        </h2>
       );
     }
   };
@@ -85,7 +86,7 @@ const Dashboard = (props) => {
         <div className='column'>
           {renderAuth()}
 
-          <span>
+          {/* <span>
             <i className='ui very large icons bar'>
               <i className='bell icon'></i>
               <div className='floating ui tiny red circular label'>1</div>
@@ -94,7 +95,7 @@ const Dashboard = (props) => {
               <i className='bell icon'></i>
               <div className='floating ui tiny red circular label'>1</div>
             </i>
-          </span>
+          </span> */}
           <div id='dash-content' className='ui content'>
             <div className='ui medium header'>Updates</div>
             <div className='ui description'>

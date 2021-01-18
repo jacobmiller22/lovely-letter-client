@@ -22,7 +22,7 @@ const LetterForm = ({ onSubmit, history, setIsPristine, vals, setVals }) => {
   };
 
   return (
-    <div>
+    <div className='ui container'>
       <div className='ui divider'></div>
       <form className='ui form' onSubmit={handleSubmit}>
         <div className='field'>

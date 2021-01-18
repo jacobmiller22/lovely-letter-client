@@ -49,7 +49,7 @@ const LetterCreate = ({ location, currUser, history }) => {
   };
 
   return (
-    <div>
+    <div className='ui container'>
       <Modal open={open}>
         <Header icon>{`Save '${
           vals.title === "" ? "Untitled" : vals.title

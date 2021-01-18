@@ -79,12 +79,18 @@ const LetterLanding = ({ title, history }) => {
             style={{ paddingLeft: "1rem" }}>
             <div className='ui header'>
               {item.title}
-
-              <div className='ui sub header'>
+              <h5 className='ui right floated header'>
                 {date.toLocaleDateString("en-US", options)}
-              </div>
+              </h5>
+              <div className='ui sub header'>{item._sender.username}</div>
             </div>
-            <div
+          </div>
+        </div>
+      </Link>
+    );
+  };
+  {
+    /* <div
               className='extra ui right floated icon button'
               onClick={(e) => {
                 e.preventDefault();
@@ -92,17 +98,8 @@ const LetterLanding = ({ title, history }) => {
                 history.push(window.location.pathname);
               }}>
               <i className='ui red trash alternate outline icon' />
-            </div>
-            <div className='description'>
-              <strong>From: </strong>
-              {item._sender.username}
-            </div>
-          </div>
-        </div>
-      </Link>
-    );
-  };
-
+            </div> */
+  }
   const detailContent = <LetterDetail content={Item.letters} />;
   const FIELDS = [
     { key: "title", text: "Title", value: "title" },
@@ -144,7 +141,6 @@ const LetterLanding = ({ title, history }) => {
         title={title}
         items={Item.letters}
         itemContent={letterContent}
-        detailContent={detailContent}
         dir={Item.dir}
         setDir={Item.setDir}
         field={Item.field}

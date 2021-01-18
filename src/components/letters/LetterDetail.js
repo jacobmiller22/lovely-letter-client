@@ -36,15 +36,19 @@ const LetterDetail = ({ match, location }) => {
       );
     }
     return (
-      <>
-        <div className='ui header'>{letter.title}</div>
+      <div className='ui content'>
+        <h1 className='ui header'>
+          {letter.title}
+          <div className='ui sub header'>{letter._sender.username}</div>
+        </h1>
+
         <p>{letter.content}</p>
-      </>
+      </div>
     );
   };
 
   return (
-    <div>
+    <div className='ui container'>
       <Link
         to={{ pathname: backRoute(location), prevRoute: location.pathname }}
         className='ui button'
