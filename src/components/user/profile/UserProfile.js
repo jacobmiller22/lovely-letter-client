@@ -1,15 +1,15 @@
 import React from "react";
 
 const UserProfile = () => {
-  const { username, email, firstName, lastName } = 1;
+  // const { username, email, firstName, lastName } = 1;
 
-  const renderEdit = () => {
-    return <div>edit</div>;
-  };
+  // const renderEdit = () => {
+  //   return <div>edit</div>;
+  // };
 
-  const renderView = () => {
-    return <div>view</div>;
-  };
+  // const renderView = () => {
+  //   return <div>view</div>;
+  // };
 
   return (
     <div className='ui container'>
@@ -19,7 +19,8 @@ const UserProfile = () => {
         <div className='avatar'>
           <img
             className='ui left floated small circular image'
-            src='https://semantic-ui.com/images/wireframe/square-image.png'></img>
+            src='https://semantic-ui.com/images/wireframe/square-image.png'
+            alt=''></img>
         </div>
         <div className='ui two column relaxed grid'>
           <div className='column'>

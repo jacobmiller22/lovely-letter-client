@@ -67,6 +67,14 @@ const App = (props) => {
           q: JSON.stringify({
             where: where(cat, currUser),
             order: `${field} ${dir}`,
+            select: [
+              "_receiver",
+              "_sender",
+              "title",
+              "dateSent",
+              "dateRead",
+              "isDraft",
+            ],
           }),
         },
       });
