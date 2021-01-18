@@ -2,9 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Reset from "./Reset";
 
-import user from "../../apis/user";
+import user from "../../../apis/user";
 
-import { initResetCreds } from "../../constants";
+import { initResetCreds } from "../../../constants";
 
 const LandingReset = () => {
   const reset = (e, vals) => {

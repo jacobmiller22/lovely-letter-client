@@ -5,7 +5,6 @@ import ItemContext from "../../contexts/ItemContext";
 
 import ItemList from "../items/ItemList";
 import SimpleModal from "../modals/SimpleModal";
-import LetterDetail from "./LetterDetail";
 
 import letterApi from "../../apis/letter";
 
@@ -89,18 +88,7 @@ const LetterLanding = ({ title, history }) => {
       </Link>
     );
   };
-  {
-    /* <div
-              className='extra ui right floated icon button'
-              onClick={(e) => {
-                e.preventDefault();
-                setOpen(true);
-                history.push(window.location.pathname);
-              }}>
-              <i className='ui red trash alternate outline icon' />
-            </div> */
-  }
-  const detailContent = <LetterDetail content={Item.letters} />;
+
   const FIELDS = [
     { key: "title", text: "Title", value: "title" },
     { key: "dateSent", text: "Date", value: "dateSent" },

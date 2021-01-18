@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
-import UserContext from "../../contexts/UserContext";
-import { initLoginCreds } from "../../constants";
+import UserContext from "../../../contexts/UserContext";
+import { initLoginCreds } from "../../../constants";
 
 import "./Auth.css";
 
@@ -17,7 +17,7 @@ const Login = ({ handleSubmit, signup }) => {
 
   const submit = (e) => {
     handleSubmit(e, vals, setState);
-    console.log(state);
+
     if (state.type !== "error") {
       setVals(initLoginCreds);
     }

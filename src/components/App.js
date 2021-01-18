@@ -4,13 +4,14 @@ import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 
 import Header from "./Header";
 import Dashboard from "./Dashboard";
-import Register from "./auth/Register";
+import Register from "./user/auth/Register";
 import LetterDetail from "./letters/LetterDetail";
 import LetterCreate from "./letters/LetterCreate";
 import SimpleModal from "./modals/SimpleModal";
 import ContactLanding from "./contacts/ContactLanding";
-import LandingLogin from "./auth/LandingLogin";
-import LandingReset from "./auth/LandingReset";
+import LandingLogin from "./user/auth/LandingLogin";
+import LandingReset from "./user/auth/LandingReset";
+import UserProfile from "./user/profile/UserProfile";
 
 import letterApi from "../apis/letter";
 
@@ -122,6 +123,7 @@ const App = (props) => {
                   isLoading,
                   setIsLoading,
                 }}>
+                <Route path='/profile' exact component={UserProfile} />
                 <Route path='/dashboard' exact component={Dash} />
                 <Route path='/contacts' exact component={Contact} />
                 <Route path='/letters/:_id' exact component={Detail} />

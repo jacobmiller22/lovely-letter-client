@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
-import UserContext from "../../contexts/UserContext";
+import UserContext from "../../../contexts/UserContext";
 
 import Login from "./Login";
 
-import user from "../../apis/user";
+import user from "../../../apis/user";
 
-import { initLoginCreds } from "../../constants";
-import { decodeJWT } from "../../utils";
+import { initLoginCreds } from "../../../constants";
+import { decodeJWT } from "../../../utils";
 
 import "./LandingLogin.css";
 
@@ -19,12 +19,10 @@ const LandingLogin = () => {
   let history = useHistory();
 
   const login = (e, vals, setState) => {
-    console.log(vals);
     if (e) e.preventDefault();
 
     (async () => {
       if (vals !== initLoginCreds) {
-        console.log("xd");
         const res = await user
           .get("/auth", { params: { user: vals } })
           .catch((err) => {
@@ -33,7 +31,6 @@ const LandingLogin = () => {
 
             switch (code) {
               case 401:
-                console.log("settings state");
                 setState({ type: "error", msg: "Invalid credentials" });
                 return;
               default:

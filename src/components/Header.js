@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 
 import { Dropdown } from "semantic-ui-react";
@@ -10,44 +10,59 @@ const Header = () => {
   const [active, setActive] = useState("");
 
   const User = useContext(UserContext);
+  let history = useHistory();
 
   const renderAuth = () => {
     const signOut = () => {
       window.localStorage.removeItem("jwt");
       User.setCurrUser(null);
       User.setIsLoggedIn(false);
+      history.push("/");
     };
 
     if (User.currUser) {
-      return (
+      const options = [
+        { key: "profile", text: "Profile", icon: "user", value: "/profile" },
+        {
+          key: "settings",
+          text: "Settings",
+          icon: "settings",
+          value: "/settings",
+        },
+        {
+          key: "logout",
+          text: "Logout",
+          icon: "sign out",
+          value: "/",
+        },
+      ];
+
+      const navigate = (e, { value }) => {
+        switch (value) {
+          case "/":
+            signOut();
+            break;
+          case "/profile":
+            history.push("/profile");
+            break;
+          default:
+            return;
+        }
+      };
+
+      const trigger = (
         <div className='item'>
-          <Link to='/' className='ui header item' onClick={signOut}>
-            Logout
-          </Link>
+          <div className='ui header item'>Profile</div>
         </div>
-        // <Dropdown
-        //   className='header item drop-down'
-        //   item
-        //   text='Profile'
-        //   open={open}
-        //   lazyLoad
-        //   onClick={() => {
-        //     console.log("Opening");
-        //     setOpen(!open);
-        //   }}>
-        //   <Dropdown.Menu>
-        //     {menuItems.map((item) => (
-        //       <Dropdown.Item key={item.value} {...item} />
-        //     ))}
-        //     {/* <Dropdown.Item>blah</Dropdown.Item>
-        //     <Dropdown.Item>blah</Dropdown.Item>
-        //     <Dropdown.Item>
-        //       <Link to='/' onClick={signOut}>
-        //         Logout
-        //       </Link>
-        //     </Dropdown.Item> */}
-        //   </Dropdown.Menu>
-        // </Dropdown>
+      );
+
+      return (
+        <Dropdown
+          options={options}
+          trigger={trigger}
+          icon={null}
+          onChange={navigate}
+        />
       );
     }
     return null;
