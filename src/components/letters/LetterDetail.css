@@ -1,3 +1,13 @@
-#back-button {
- 
+.card-title > h2 {
+  font-family: Lato-Bold, "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+.card-subtitle {
+  text-transform: uppercase;
+  font-family: Lato, "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+
+.card-text {
+  font-family: Lato, "Helvetica Neue", Arial, Helvetica, sans-serif;
+  font-size: 1.1em;
+  line-height: 1.75em;
 }

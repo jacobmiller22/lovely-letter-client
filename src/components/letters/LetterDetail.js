@@ -1,63 +1,56 @@
-import React, { useEffect, useState, useContext } from "react";
-import { Link } from "react-router-dom";
-import { backRoute } from "../../utils";
-import ItemContext from "../../contexts/ItemContext";
+import { getLetter } from "../../apis/letter";
+
+import { useEffect, useState } from "react";
+
+import { Container, Row, Card } from "react-bootstrap";
 
 import "./LetterDetail.css";
 
-const LetterDetail = ({ match, location }) => {
+const LetterDetail = ({ _id }) => {
   const [letter, setLetter] = useState(null);
 
-  const Item = useContext(ItemContext);
-
   useEffect(() => {
-    Item.letters.forEach((letter) => {
-      if (letter._id === match.params._id) {
-        setLetter(letter);
+    const params = { _id };
+
+    (async () => {
+      const res = await getLetter(params);
+      if (res.status === 200) {
+        setLetter({ ...res.data });
+      } else {
+        setLetter({});
       }
-    });
-  }, [Item.letters, match]);
+    })();
+  }, []);
 
-  const renderContent = () => {
-    if (!letter) {
-      return (
-        <div className='ui fluid placeholder'>
-          <div className='header'>
-            <div className='line'></div>
-            <div className='line'></div>
-          </div>
-          <div className='paragraph'>
-            <div className='line'></div>
-            <div className='line'></div>
-            <div className='line'></div>
-            <div className='line'></div>
-          </div>
-        </div>
-      );
-    }
-    return (
-      <div className='ui content'>
-        <h1 className='ui header'>
-          {letter.title}
-          <div className='ui sub header'>{letter._sender.username}</div>
-        </h1>
+  if (!letter) {
+    return null;
+  }
 
-        <p>{letter.content}</p>
-      </div>
-    );
-  };
+  if (!letter._id) {
+    return <p>Letter does not exist</p>;
+  }
 
+  console.log(letter);
   return (
-    <div className='ui container'>
-      <Link
-        to={{ pathname: backRoute(location), prevRoute: location.pathname }}
-        className='ui button'
-        id='back-button'>
-        Back
-      </Link>
-      <div className='ui very padded raised segment'>{renderContent()}</div>
-    </div>
+    <Container>
+      <Row>
+        <Card>
+          <Card.Body>
+            <Card.Title>
+              <h2>{letter.title}</h2>
+              <Card.Subtitle>{letter._sender.username}</Card.Subtitle>
+            </Card.Title>
+            <Card.Text>{letter.content}</Card.Text>
+          </Card.Body>
+        </Card>
+      </Row>
+      <h1 className="ui header">
+        <div className="ui sub header"></div>
+      </h1>
+    </Container>
   );
 };
 
 export default LetterDetail;
+
+/// #1E70BF

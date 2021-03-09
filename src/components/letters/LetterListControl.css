@@ -1,0 +1,31 @@
+.dropdown.sort-field {
+  display: inline;
+}
+.dropdown.sort-field > button {
+  background-color: rgb(8, 65, 92);
+  border-color: #08415c;
+}
+
+.dropdown.show.sort-field > button {
+  background-color: rgb(113, 201, 232);
+  border-color: #71c9e8;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active:focus,
+.btn-primary:not(:disabled):not(.disabled).active:focus,
+.show > .btn-primary.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgb(113 201 232 / 50%);
+}
+
+.dropdown.sort-field a {
+  color: #08415c;
+}
+.dropdown.sort-field a:hover {
+  color: #71c9e8;
+}
+
+.arrow {
+  cursor: pointer;
+  margin: 5px;
+  fill: #08415c;
+}

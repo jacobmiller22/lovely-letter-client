@@ -1,0 +1,23 @@
+@import "./latofonts.css";
+
+body {
+  font-family: Lato-Medium, "Helvetica Neue", Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 1.4285em;
+  color: rgba(0, 0, 0, 0.87);
+  min-width: 32px;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background: #fff;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: Lato-Semibold, "Helvetica Neue", Arial, Helvetica, sans-serif;
+  /* font-weight: 300; */
+}

@@ -1,32 +1,16 @@
-.left-side-content {
-  width: 100vw;
-  background: #08415c;
-
-  padding: 10px;
-}
-
-#landing {
-  display: flex;
-}
-
-#landing a {
-  color: #08415c;
-}
-
-.right-side-content {
-  max-width: 100vw;
-  width: 100vw;
-  max-height: 100vh;
-  padding: 20px;
-  justify-content: center;
-  align-items: center;
-}
-
 .devise {
   max-width: 410px;
   margin: 0 auto;
   padding: 30px 0 20px;
   margin-top: 40px;
+  caret-color: transparent;
+}
+.devise a {
+  color: #08415c;
+}
+
+.devise a:hover {
+  color: #60c9f1;
 }
 
 .register-remarks {
@@ -46,4 +30,8 @@
 
 .heavy {
   font-weight: 600;
+}
+
+.title {
+  color: #052839;
 }

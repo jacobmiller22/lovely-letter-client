@@ -1,7 +1,14 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
-const LetterForm = ({ onSubmit, history, setIsPristine, vals, setVals }) => {
+import { Form, Button } from "react-bootstrap";
+
+import "./LetterForm.css";
+
+const LetterForm = ({ config: { onSubmit, setIsPristine, vals, setVals } }) => {
   const [isDraft, setIsDraft] = useState(false);
+
+  let history = useHistory();
 
   const handleChange = ({ target }) => {
     let nam = target.name;
@@ -22,59 +29,54 @@ const LetterForm = ({ onSubmit, history, setIsPristine, vals, setVals }) => {
   };
 
   return (
-    <div className='ui container'>
-      <div className='ui divider'></div>
-      <form className='ui form' onSubmit={handleSubmit}>
-        <div className='field'>
-          <div className='ui labeled input'>
-            <div className='ui label'>Title</div>
-            <input
-              name='title'
-              type='text'
-              placeholder='Title'
-              value={vals.title}
-              onChange={handleChange}
-            />
-          </div>
-        </div>
+    <>
+      <Form onSubmit={handleSubmit} className="form">
+        <Form.Group>
+          <Form.Label>Title</Form.Label>
+          <Form.Control
+            name="title"
+            placeholder="Title"
+            value={vals.title}
+            onChange={handleChange}
+          />
+        </Form.Group>
 
-        <div className='field'>
-          <div className='ui labeled input'>
-            <div className='ui label'>Recipient:</div>
-            <input
-              name='receiver'
-              type='text'
-              placeholder='Recipient'
-              value={vals.receiver}
-              onChange={handleChange}
-            />
-          </div>
-        </div>
+        <Form.Group>
+          <Form.Label>Recipient</Form.Label>
+          <Form.Control
+            name="receiver"
+            placeholder="Recipient"
+            value={vals.receiver}
+            onChange={handleChange}
+          />
+        </Form.Group>
 
-        <div className='field'>
-          <label>Content</label>
-          <div className='ui input'>
-            <textarea
-              name='content'
-              rows={15}
-              value={vals.content}
-              onChange={handleChange}></textarea>
-          </div>
-        </div>
-
-        <button className='ui button' type='submit'>
-          Send
-        </button>
-        <button
-          className='ui button'
-          type='submit'
-          onClick={() => {
-            setIsDraft(true);
-          }}>
-          Save as draft
-        </button>
-      </form>
-    </div>
+        <Form.Group>
+          <Form.Label>Content</Form.Label>
+          <Form.Control
+            name="content"
+            placeholder="Enter message here..."
+            as="textarea"
+            rows={15}
+            value={vals.content}
+            onChange={handleChange}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Button className="btn" type="submit">
+            Send
+          </Button>
+          <Button
+            className="btn"
+            onClick={() => {
+              setIsDraft(true);
+            }}
+          >
+            Save as Draft
+          </Button>
+        </Form.Group>
+      </Form>
+    </>
   );
 };
 

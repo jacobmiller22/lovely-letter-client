@@ -57,27 +57,15 @@ const LandingLogin = () => {
     // }
     return (
       <>
-        <span className='left-side-content'>
-          <h1 className='title ui header'>Lovely Letters</h1>
+        <span className="left-side-content">
+          <h1 className="title ui header">Lovely Letters</h1>
         </span>
-        <span className='right-side-content'>
-          <div className='devise'>
-            <h1 className='ui centered header'>Welcome back.</h1>
-            <div className='register-remarks description'>
-              New to Lovely Letters?
-              <Link to={{ pathname: "/auth/register" }} className='heavy'>
-                {" "}
-                Sign Up
-              </Link>
-            </div>
-            <Login handleSubmit={login} redirect='/dashboard' />
-          </div>
-        </span>
+        <span className="right-side-content"></span>
       </>
     );
   };
 
-  return <div id='landing'>{renderContent()}</div>;
+  return <div id="landing">{renderContent()}</div>;
 };
 
 export default LandingLogin;

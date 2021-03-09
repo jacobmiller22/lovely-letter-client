@@ -1,6 +1,9 @@
 import React from "react";
-
 import { Link } from "react-router-dom";
+
+import Card from "react-bootstrap/Card";
+
+import "./Item.css";
 
 const Item = ({ item, onItemSelect }) => {
   const onItemClick = () => {
@@ -9,22 +12,32 @@ const Item = ({ item, onItemSelect }) => {
     }
     return;
   };
-  console.log(item);
+
   return (
     <Link
       to={`/${item._id}`}
-      className='item'
+      className="item"
       key={item.id}
-      onClick={() => onItemClick()}>
-      <div className='middle aligned content' style={{ paddingLeft: "2rem" }}>
-        <div className='ui header'>{item.data.title}</div>
+      onClick={() => onItemClick()}
+    >
+      <Card>
+        <Card.Title className="title">{item.title}</Card.Title>
+        <Card.Subtitle>
+          {new Date(item.dateSent).toLocaleDateString()}
+        </Card.Subtitle>
+        <Card.Body></Card.Body>
+        <Card.Footer>
+          <div>
+            <strong>To: </strong>
+            {item._receiver.username}
+          </div>
 
-        <div className='description'>
-          <strong>To: </strong>
-          {item.recipient} <strong>From: </strong>
-          {item.sender}
-        </div>
-      </div>
+          <div>
+            <strong>From: </strong>
+            {item._sender.username}
+          </div>
+        </Card.Footer>
+      </Card>
     </Link>
   );
 };

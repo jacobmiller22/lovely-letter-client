@@ -1,0 +1,27 @@
+.tab-menu-tab {
+  color: rgba(0, 0, 0, 0.87);
+  background-color: #fff;
+  padding: 10px 0px;
+  text-align: center;
+  margin-top: 15px;
+  border-radius: 3px;
+  border: 1px solid rgba(34, 36, 38, 0.15);
+  cursor: pointer;
+  caret-color: transparent;
+}
+.tab-menu-tab a {
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.tab-menu-tab.active {
+  background-color: #f2f2f2;
+}
+
+.tab-menu-tab:hover {
+  background-color: #f7f7f7;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.tab-menu-container {
+  padding: 10px;
+}

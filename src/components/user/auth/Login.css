@@ -1,0 +1,44 @@
+.login-btn {
+  background-color: #08415c !important;
+  width: 100%;
+}
+.text {
+  color: #08415c;
+}
+
+.pull-right.text {
+  color: #08415c;
+}
+
+.pull-right {
+  float: right;
+}
+
+.form-group {
+  caret-color: #08415c;
+}
+
+#form-msg-board {
+  width: 100%;
+  text-align: left;
+}
+
+#form-msg-board > * {
+  padding: 1em 1.5em;
+  margin: 1em 0;
+  border-radius: 0.25em;
+  border: 1px solid;
+}
+
+#form-msg-board > .error {
+  color: #912d2b;
+
+  background-color: #fff6f6;
+  border-color: #e0b4b4;
+}
+
+#form-msg-board > .success {
+  color: #2c662d;
+  background-color: #fcfff5;
+  border-color: #92ad86;
+}

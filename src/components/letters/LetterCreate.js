@@ -5,7 +5,7 @@ import LetterForm from "./LetterForm";
 
 import { backRoute } from "../../utils";
 
-import lettersApi from "../../apis/letter";
+// import lettersApi from "../../apis/letter";
 import { Modal, Icon, Header } from "semantic-ui-react";
 
 const LetterCreate = ({ location, currUser, history }) => {
@@ -18,25 +18,21 @@ const LetterCreate = ({ location, currUser, history }) => {
   const [open, setOpen] = useState(false);
 
   const onSubmit = async (formValues) => {
-    const auth = {
-      Authorization: `Bearer ${window.localStorage.getItem("jwt")}`,
-    };
-
     const formData = { ...formValues, sender: currUser.username };
     console.log(formData);
-    const res = await lettersApi.post(
-      "/letters",
-      {
-        ...formData,
-      },
-      { headers: { ...auth } }
-    );
+    // const res = await lettersApi.post(
+    //   "/letters",
+    //   {
+    //     ...formData,
+    //   },
+    //   { headers: { ...auth } }
+    // );
 
-    if (res.status === 200) {
-      history.push("/");
-    } else {
-      // Show error message - Oops something went wrong.
-    }
+    // if (res.status === 200) {
+    //   history.push("/");
+    // } else {
+    //   // Show error message - Oops something went wrong.
+    // }
   };
 
   const to = {
@@ -49,33 +45,33 @@ const LetterCreate = ({ location, currUser, history }) => {
   };
 
   return (
-    <div className='ui container'>
+    <div className="ui container">
       <Modal open={open}>
         <Header icon>{`Save '${
           vals.title === "" ? "Untitled" : vals.title
         }' as Draft?`}</Header>
-        <Modal.Content>
-          <p>Save as Draft? Unsaved changes will be lost.</p>
-        </Modal.Content>
+        <Modal.Content></Modal.Content>
         <Modal.Actions>
           <div
-            className='red ui button'
+            className="red ui button"
             onClick={() => {
               setOpen(false);
               history.push(backRoute(location));
-            }}>
-            <Icon name='remove' /> Discard
+            }}
+          >
+            <Icon name="remove" /> Discard
           </div>
-          <div className='ui button' onClick={() => setOpen(false)}>
+          <div className="ui button" onClick={() => setOpen(false)}>
             Keep Editing
           </div>
           <div
-            className='green ui button'
+            className="green ui button"
             onClick={() => {
               setOpen(false);
               onSubmit({ ...vals, isDraft: true });
-            }}>
-            <Icon name='checkmark' /> Save as Draft
+            }}
+          >
+            <Icon name="checkmark" /> Save as Draft
           </div>
         </Modal.Actions>
       </Modal>
@@ -83,10 +79,11 @@ const LetterCreate = ({ location, currUser, history }) => {
         to={to}
         onClick={() => {
           if (!isPristine) setOpen(true);
-        }}>
-        <button className='ui button '>Back</button>
+        }}
+      >
+        <button className="ui button ">Back</button>
       </Link>
-      <span className='ui header'>Compose Letter</span>
+      <span className="ui header">Compose Letter</span>
       <LetterForm
         onSubmit={onSubmit}
         vals={vals}

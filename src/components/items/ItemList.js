@@ -1,105 +1,63 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
+import _ from "lodash";
+
+import { Container, Row, Spinner } from "react-bootstrap";
 
 import Item from "./Item";
-import ItemDetail from "./ItemDetail";
-import { Dropdown } from "semantic-ui-react";
 
-import { renderPlaceholder } from "../../utils";
+import "./ItemList.css";
 
 const ItemList = ({
-  items,
-  dir,
-  setDir,
-  field,
-  setField,
-  FIELDS,
-  title,
-  itemContent,
-  detailContent,
+  config: { items, CustomItem, tab, handleListUpdate, title, isLoading },
 }) => {
-  const [selected, setSelected] = useState(null);
+  const [showSpinner, setShowSpinner] = useState(false);
 
-  const onItemSelect = (item) => {
-    setSelected(item);
-  };
-
-  const renderFocusDetail = () => {
-    if (!selected) {
-      return (
-        <div className='ui container'>
-          <div className='ui divided items'>{renderItems(onItemSelect)}</div>
-        </div>
-      );
+  useEffect(() => {
+    if (isLoading) {
+      setTimeout(() => {
+        setShowSpinner(true);
+      }, 2000);
+    } else {
+      setShowSpinner(false);
     }
-
-    if (detailContent) {
-      return detailContent(selected);
-    }
-    return <ItemDetail item={selected} />;
-  };
+  }, [showSpinner]);
 
   const renderItems = (onItemSelect) => {
-    if (itemContent) {
-      if (!onItemSelect) {
-        // Figure out what to do if we do not have a callback for selecting an item
-      }
-      if (!items.length) {
-        return (
-          <>
-            <div className='ui rasied segment'>{renderPlaceholder()}</div>
-            <div className='ui rasied segment'>{renderPlaceholder()}</div>
-            <div className='ui rasied segment'>{renderPlaceholder()}</div>
-          </>
-        );
-      }
+    if (isLoading && showSpinner) {
+      return <Spinner animation="border" />;
+    }
+    if (isLoading || !items) {
+      return null;
+    }
+    if (!items.length) {
+      return <div>No items...</div>;
+    }
 
-      return items.map((item) => {
-        return (
-          <div key={item._id} className='ui raised segment'>
-            {itemContent(item, onItemSelect)}
-          </div>
-        );
+    if (CustomItem) {
+      return _.map(items, (item) => {
+        const itemCfg = {
+          item,
+          onItemSelect,
+          tab,
+          handleListUpdate,
+        };
+        return <CustomItem key={item._id} config={itemCfg} />;
       });
     }
-
-    if (!items.length) {
-      return <div className='ui centered subheader'>No items here..</div>;
-    }
-    return items.map((item) => {
-      console.log(item);
-      return <Item item={item} onItemSelect={onItemSelect} key={item._id} />;
-    });
-  };
-
-  const renderArrow = () => {
-    if (dir === "ASC") {
-      return <i className='angle up icon' />;
-    }
-    if (dir === "DESC") {
-      return <i className='angle down icon' />;
-    }
-    return null;
+    return _.map(items, (item) => (
+      <Item item={item} onItemSelect={onItemSelect} key={item._id} tab={tab} />
+    ));
   };
 
   return (
-    <div className='ui container'>
-      <div className='ui left floated large header'>{title}</div>
-      <div className='ui content'>
-        <button
-          className='ui circular icon button'
-          onClick={() => setDir(dir === "ASC" ? "DESC" : "ASC")}>
-          {renderArrow()}
-        </button>
-        <Dropdown
-          placeholder='Sort by:'
-          selection
-          options={FIELDS}
-          onChange={(e, { value }) => setField(value)}
-          value={field}
-        />
-      </div>
-      <div className='ui list'>{renderFocusDetail()}</div>
-    </div>
+    <Container>
+      <Row>
+        <h3>{title}</h3>
+      </Row>
+      <Row>
+        <div className="item-list">{renderItems()}</div>
+      </Row>
+    </Container>
   );
 };
 

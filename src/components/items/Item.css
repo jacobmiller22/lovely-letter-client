@@ -1,0 +1,19 @@
+.card {
+  padding: 10px;
+  margin: 5px;
+  width: 100%;
+}
+
+.card-title.title {
+  font-family: "Lato-Heavy";
+}
+
+.card-body {
+  padding-left: 0px;
+}
+
+.card-footer {
+  padding: 0px !important;
+  border-top: none !important;
+  background-color: #fff !important;
+}

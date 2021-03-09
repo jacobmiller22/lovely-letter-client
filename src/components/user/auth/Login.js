@@ -1,13 +1,22 @@
 import React, { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import UserContext from "../../../contexts/UserContext";
+import _ from "lodash";
 import { initLoginCreds } from "../../../constants";
 
-import "./Auth.css";
+import { Form, Button } from "react-bootstrap";
+import LoadableButton from "../../LoadableButton";
 
-const Login = ({ handleSubmit, signup }) => {
+import "./Login.css";
+
+const Login = ({ handleSubmit }) => {
   const [vals, setVals] = useState(initLoginCreds);
-  const [state, setState] = useState({});
+  const [state, setState] = useState({
+    isLoading: false,
+    error: false,
+    success: false,
+    msg: "",
+  });
   const [remember, setRemember] = useState(
     window.localStorage.getItem("remember") !== undefined
   );
@@ -15,7 +24,7 @@ const Login = ({ handleSubmit, signup }) => {
   const User = useContext(UserContext);
   let history = useHistory();
 
-  const submit = (e) => {
+  const onSubmit = (e) => {
     handleSubmit(e, vals, setState);
 
     if (state.type !== "error") {
@@ -31,77 +40,73 @@ const Login = ({ handleSubmit, signup }) => {
     history.push("/dashboard");
   }
 
-  const renderSignUp = () => {
-    if (signup) {
-      return (
-        <>
-          <button className='ui button' type='submit'>
-            Login
-          </button>
-          {"Or,  "}
-          <Link to={{ pathname: "/auth/register" }}> Sign Up</Link>
-        </>
-      );
-    }
-    return null;
+  const renderMsg = (msg) => {
+    const stateTypes = ["error", "success"];
+    return _.map(stateTypes, (type) => {
+      if (!state[type]) {
+        return null;
+      }
+
+      switch (type) {
+        case "error":
+          return (
+            <div className="error">
+              <strong>Error</strong>
+              <br />
+              {msg || ""}
+            </div>
+          );
+        case "success":
+          return (
+            <div className="success">
+              <strong>Success</strong>
+              <br />
+              {msg || ""}
+            </div>
+          );
+        default:
+          return null;
+      }
+    });
   };
 
+  const loginBtnCfg = { text: "Login", className: "login-btn", type: "submit" };
+
   return (
-    <div className='auth-window'>
-      <form className={`ui form ${state.type}`} onSubmit={submit}>
-        <div className='field'>
-          <input
-            name='username'
-            type='text'
-            placeholder='Username'
-            value={vals.username}
-            onChange={handleChange}
-          />
-        </div>
+    <Form onSubmit={onSubmit}>
+      <Form.Group>
+        <Form.Control
+          name="username"
+          placeholder="Username"
+          value={vals.username}
+          onChange={handleChange}
+        />
+      </Form.Group>
+      <Form.Group>
+        <Form.Control
+          name="password"
+          type="password"
+          placeholder="Password"
+          value={vals.password}
+          onChange={handleChange}
+        />
+      </Form.Group>
 
-        <div className='field'>
-          <input
-            name='password'
-            type='password'
-            placeholder='Password'
-            value={vals.password}
-            onChange={handleChange}
-          />
-        </div>
+      <Form.Group inline>
+        <Form.Check
+          value={remember}
+          onClick={() => setRemember(!remember)}
+          label="Remember me"
+          inline
+        />
+        <Link to={{ pathname: "/auth/reset" }} className="pull-right text">
+          Forgot password?
+        </Link>
+      </Form.Group>
 
-        <div className='ui error message'>
-          <div className='header'>Error!</div>
-          <p>{state.msg}</p>
-        </div>
-
-        <div className='ui success message'>
-          <div className='header'>success!</div>
-          <p>{state.msg}</p>
-        </div>
-
-        <div>{renderSignUp()}</div>
-
-        <div>
-          <div className={`options ui ${remember ? "checked" : ""} checkbox`}>
-            <input
-              type='checkbox'
-              name='remember'
-              value={remember}
-              onClick={() => setRemember(!remember)}
-            />
-            <label>Remember me</label>
-          </div>
-          <Link to={{ pathname: "/auth/reset" }} className='pull-right'>
-            Forgot password?
-          </Link>
-        </div>
-        <div>
-          <button className='ui button login' type='submit'>
-            Login
-          </button>
-        </div>
-      </form>
-    </div>
+      <div id="form-msg-board">{renderMsg(state.msg)}</div>
+      <LoadableButton isLoading={state.isLoading} btnCfg={loginBtnCfg} />
+    </Form>
   );
 };
 

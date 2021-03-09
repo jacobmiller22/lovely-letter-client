@@ -1,0 +1,28 @@
+#nav {
+  font-family: Lato-Heavy, "Helvetica Neue", Arial, Helvetica, sans-serif;
+  background: #08415c;
+  margin-bottom: 10px;
+}
+
+.navbar-brand > a {
+  color: #71c9e8 !important;
+  cursor: pointer;
+  caret-color: transparent;
+}
+
+.navbar-brand > a:hover {
+  text-decoration: underline !important;
+}
+
+.navbar-nav > * {
+  color: #71c9e8 !important;
+}
+
+.nav-link {
+  color: #71c9e8 !important;
+  cursor: pointer;
+}
+
+.nav-link:hover {
+  text-decoration: underline !important;
+}

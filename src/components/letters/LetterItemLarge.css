@@ -1,0 +1,55 @@
+.inline.card-title {
+  display: inline;
+  font-family: Lato-Semibold, "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+
+.pull-right {
+  float: right;
+}
+
+.pull-right.inline.subtitle {
+  float: right;
+  padding-top: 10px;
+  display: inline;
+}
+
+.body {
+  padding-left: 1.25em !important;
+}
+
+.item {
+  color: #020202;
+  caret-color: transparent;
+}
+
+.item:hover {
+  text-decoration: none;
+  color: #71c9e8;
+}
+
+.letter-address {
+  text-transform: uppercase;
+  font-size: 1rem;
+
+  line-height: 1.2em;
+  font-family: Lato-Light, "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+
+div.hide {
+  display: none;
+}
+
+.card:hover .hide {
+  display: block;
+}
+
+.delete-btn {
+  fill: #d3d3d3;
+}
+
+svg.delete-btn:hover {
+  height: 32px !important;
+  width: 32px !important;
+  transform: translate3d(-4px, 0, 0);
+  fill: #d03333;
+}
