@@ -49,11 +49,12 @@ export const renderPlaceholder = () => {
 };
 
 export const routeRequiresAuth = (win) => {
-  return !noAuthRoutes.includes(win.location.pathname);
+  var re = new RegExp(noAuthRoutes.join("|"), "i");
+  return !re.test(win.location.pathname);
 };
 
 export const getCWDLeg = (pathname) => {
   const el = pathname.split("/");
-  console.log(el[el.length - 1]);
+
   return el[el.length - 1];
 };

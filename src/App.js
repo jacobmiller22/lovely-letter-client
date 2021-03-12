@@ -4,12 +4,15 @@ import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 
 import Header from "./Views/Header";
 import Dashboard from "./Views/Dashboard";
-import LoginView from "./Views/LoginView";
 import ComposeView from "./Views/ComposeView";
 import LettersListView from "./Views/LettersListView";
 import DetailView from "./Views/DetailView";
+import AuthView from "./Views/AuthView";
 
 import ModalBuilder from "./components/ModalBuilder";
+import LoginPanel from "./components/user/auth/LoginPanel";
+import ResetPanel from "./components/user/auth/ResetPanel";
+import RegisterPanel from "./components/user/auth/RegisterPanel";
 // import ContactsListView from "./Views/ContactsListView";
 
 // import Register from "./components/user/auth/Register";
@@ -18,7 +21,7 @@ import ModalBuilder from "./components/ModalBuilder";
 // import SimpleModal from "./components/modals/SimpleModal";
 // import ContactLanding from "./components/contacts/ContactLanding";
 // import LandingLogin from "./components/user/auth/LandingLogin";
-import LandingReset from "./components/user/auth/LandingReset";
+// import LandingReset from "./components/user/auth/LandingReset";
 // import UserProfile from "./components/user/profile/UserProfile";
 
 import UserContext from "./contexts/UserContext";
@@ -71,14 +74,54 @@ const App = (props) => {
     actions: [authButton],
   };
 
+  const renderAuthRoutes = () => (
+    <>
+      <Route
+        exact
+        path="/"
+        component={() => (
+          <AuthView>
+            <LoginPanel />
+          </AuthView>
+        )}
+      />
+      <Route
+        exact
+        path="/auth/reset"
+        component={() => (
+          <AuthView>
+            <ResetPanel initStage={1} />
+          </AuthView>
+        )}
+      />
+      <Route
+        exact
+        path="/auth/reset/:_id"
+        component={() => (
+          <AuthView>
+            <ResetPanel initStage={2} />
+          </AuthView>
+        )}
+      />
+      <Route
+        path="/auth/register"
+        exact
+        component={() => (
+          <AuthView>
+            <RegisterPanel />
+          </AuthView>
+        )}
+      />
+    </>
+  );
+
   return (
     <div>
       <BrowserRouter>
         <UserContext.Provider value={{ currUser, setCurrUser, setIsLoggedIn }}>
           <ModalBuilder config={modalCfg} />
           <Switch>
-            <Route exact path="/" component={LoginView} />
-            <Route exact path="/auth/reset" component={LandingReset} />
+            {renderAuthRoutes()}
             <>
               <Header />
               <Route path="/dashboard" exact component={Dashboard} />
@@ -88,7 +131,6 @@ const App = (props) => {
 
               {/* <Route path="/profile" exact component={UserProfile} /> */}
               {/* <Route path="/contacts" exact component={Contact} /> */}
-              {/* <Route path="/auth/register" exact component={Register} /> */}
               <Route path="/drafts/new" exact component={ComposeView} />
             </>
           </Switch>

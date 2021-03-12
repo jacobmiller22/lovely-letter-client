@@ -5,7 +5,15 @@ export const initLoginCreds = {
 
 export const initResetCreds = {
   username_email: "",
-  password: "",
+  new_password: "",
+  new_password_2: "",
 };
 
-export const noAuthRoutes = ["/", "/auth/reset"];
+export const noAuthRoutes = [
+  "^/$",
+  "^/auth/reset/?$",
+  "^/auth/register/?$",
+  "^/auth/reset/.*/?$",
+];
+
+export const resetTokExp = "20 mins";

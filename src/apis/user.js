@@ -1,11 +1,33 @@
 import axios from "axios";
 import keys from "../config/keys";
 
-const auth = {
-  Authorization: `Bearer ${window.localStorage.getItem("jwt")}`,
+const user = axios.create({
+  baseURL: keys.ll_server,
+  headers: { ...keys.additional_headers },
+});
+
+const getAuthHeader = () => {
+  return {
+    headers: {
+      Authorization: `Bearer ${window.localStorage.getItem("jwt")}`,
+    },
+  };
 };
 
-export default axios.create({
-  baseURL: keys.ll_server,
-  headers: { ...keys.additional_headers, ...auth },
-});
+export const sendUserResetLink = (params) => {
+  const { username_email } = params;
+
+  return user.put("/auth", {}, { params: { username_email } });
+};
+
+export const resetUser = (params) => {
+  const { tok, new_password } = params;
+
+  return user.patch("/auth", {}, { params: { tok, new_password } });
+};
+
+export const loginUser = (params) => {
+  return user.get("/auth", { params });
+};
+
+export const registerUser = () => {};

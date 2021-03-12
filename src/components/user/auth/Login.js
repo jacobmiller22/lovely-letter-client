@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import UserContext from "../../../contexts/UserContext";
-import _ from "lodash";
+import map from "lodash/map";
 import { initLoginCreds } from "../../../constants";
 
 import { Form, Button } from "react-bootstrap";
@@ -42,7 +42,7 @@ const Login = ({ handleSubmit }) => {
 
   const renderMsg = (msg) => {
     const stateTypes = ["error", "success"];
-    return _.map(stateTypes, (type) => {
+    return map(stateTypes, (type) => {
       if (!state[type]) {
         return null;
       }

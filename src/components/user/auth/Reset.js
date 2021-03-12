@@ -1,21 +1,35 @@
 import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import UserContext from "../../../contexts/UserContext";
+import map from "lodash/map";
+
+import { Form } from "react-bootstrap";
 
 import "./Auth.css";
+import LoadableButton from "../../LoadableButton";
 
-const Login = ({ handleSubmit, signup, init }) => {
+const Reset = ({ handleSubmit, init, stage }) => {
   const [vals, setVals] = useState(init);
+  const [state, setState] = useState({
+    isLoading: false,
+    error: false,
+    success: false,
+    msg: "",
+  });
 
   const User = useContext(UserContext);
   let history = useHistory();
 
-  const submit = (e) => {
-    handleSubmit(e, vals);
-    setVals(init);
+  const onSubmit = (e) => {
+    handleSubmit(e, vals, setState);
+
+    if (state.type !== "error") {
+      setVals(init);
+    }
   };
 
   const handleChange = ({ target: { name, value } }) => {
+    console.log(vals);
     setVals({ ...vals, [name]: value });
   };
 
@@ -23,58 +37,87 @@ const Login = ({ handleSubmit, signup, init }) => {
     history.push("/dashboard");
   }
 
-  // const renderSignUp = () => {
-  //   if (signup) {
-  //     return (
-  //       <>
-  //         <button className='ui button' type='submit'>
-  //           Login
-  //         </button>
-  //         {"Or,  "}
-  //         <Link to={{ pathname: "/auth/register" }}> Sign Up</Link>
-  //       </>
-  //     );
-  //   }
-  //   return null;
-  // };
+  const renderMsg = (msg) => {
+    const stateTypes = ["error", "success"];
+    return map(stateTypes, (type) => {
+      if (!state[type]) {
+        return null;
+      }
 
-  return (
-    <div className='auth-window'>
-      <form className='ui form' onSubmit={submit}>
-        <div className='field'>
-          <input
-            name='username_email'
-            type='text'
-            placeholder='Username/Email'
-            value={vals.username}
+      switch (type) {
+        case "error":
+          return (
+            <div className="error">
+              <strong>Error</strong>
+              <br />
+              {msg || ""}
+            </div>
+          );
+        case "success":
+          return (
+            <div className="success">
+              <strong>Success</strong>
+              <br />
+              {msg || ""}
+            </div>
+          );
+        default:
+          return null;
+      }
+    });
+  };
+
+  const renderContinue = () => {
+    let resetBtnCfg = {
+      text: "Reset Password",
+      className: "login-btn",
+      type: "submit",
+    };
+    if (stage === 1) {
+      resetBtnCfg = { ...resetBtnCfg, text: "Next" };
+      return (
+        <LoadableButton isLoading={state.isLoading} btnCfg={resetBtnCfg} />
+      );
+    }
+    return (
+      <>
+        <Form.Group>
+          <Form.Control
+            name="new_password"
+            placeholder="New password"
+            value={vals.new_password}
             onChange={handleChange}
           />
-        </div>
+        </Form.Group>
+        <Form.Group>
+          <Form.Control
+            name="new_password_2"
+            placeholder="Retype new password"
+            value={vals.new_password_2}
+            onChange={handleChange}
+          />
+        </Form.Group>
+        <LoadableButton isLoading={state.isLoading} btnCfg={resetBtnCfg} />
+      </>
+    );
+  };
 
-        {/* <div>{renderSignUp()}</div> */}
-
-        {/* <div>
-          <div className={`options ui ${remember ? "checked" : ""} checkbox`}>
-            <input
-              type='checkbox'
-              name='remember'
-              value={remember}
-              onClick={() => setRemember(!remember)}
-            />
-            <label>Remember me</label>
-          </div>
-          <Link to={{ pathname: "/auth/reset" }} className='pull-right'>
-            Forgot password?
-          </Link>
-        </div> */}
-        <div>
-          <button className='ui button login' type='submit'>
-            Reset Password
-          </button>
-        </div>
-      </form>
-    </div>
+  return (
+    <Form onSubmit={onSubmit}>
+      {stage === 1 ? (
+        <Form.Group>
+          <Form.Control
+            name="username_email"
+            placeholder="Username/Email"
+            value={vals.username_email}
+            onChange={handleChange}
+          />
+        </Form.Group>
+      ) : null}
+      <div id="form-msg-board">{renderMsg(state.msg)}</div>
+      {renderContinue()}
+    </Form>
   );
 };
 
-export default Login;
+export default Reset;

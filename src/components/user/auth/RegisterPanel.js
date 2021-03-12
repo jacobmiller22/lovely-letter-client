@@ -10,7 +10,7 @@ import Login from "./Login";
 
 import "./LoginPanel.css";
 
-const LoginPanel = () => {
+const RegisterPanel = () => {
   const User = useContext(UserContext);
 
   let history = useHistory();
@@ -95,4 +95,4 @@ const LoginPanel = () => {
   );
 };
 
-export default LoginPanel;
+export default RegisterPanel;
