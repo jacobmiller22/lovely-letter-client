@@ -30,4 +30,7 @@ export const loginUser = (params) => {
   return user.get("/auth", { params });
 };
 
-export const registerUser = () => {};
+export const registerUser = (body) => {
+  const { username, email, password } = body;
+  return user.post("/auth", { username, email, password }, {});
+};

@@ -2,11 +2,11 @@ import { useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import UserContext from "../../../contexts/UserContext";
 
-import { loginUser } from "../../../apis/user";
-import { initLoginCreds } from "../../../constants";
+import { registerUser } from "../../../apis/user";
+import { initRegisterCreds } from "../../../constants";
 import { decodeJWT } from "../../../utils";
 
-import Login from "./Login";
+import Register from "./Register";
 
 import "./LoginPanel.css";
 
@@ -15,11 +15,11 @@ const RegisterPanel = () => {
 
   let history = useHistory();
 
-  const login = (e, vals, setState) => {
+  const register = (e, vals, setState) => {
     if (e) e.preventDefault();
 
     (async () => {
-      if (vals === initLoginCreds) {
+      if (vals === initRegisterCreds) {
         return;
       }
       setState({ error: false, isLoading: true, success: false });
@@ -28,12 +28,12 @@ const RegisterPanel = () => {
 
       const errCallback = (code) => {
         switch (+code) {
-          case 401:
+          case 422:
             setState({
               error: true,
               isLoading: false,
               success: false,
-              msg: "Username or password incorrect.",
+              msg: "Username or Email is not available",
             });
             break;
           case 500:
@@ -55,26 +55,22 @@ const RegisterPanel = () => {
       };
 
       try {
-        var res = await loginUser(params);
+        const params = { ...vals };
+        var res = await registerUser(params);
       } catch (err) {
         errCallback(err ? err.response.status : 500);
         return;
       }
 
-      if (res.status === 200) {
-        const { token } = res.data;
-        window.localStorage.setItem("jwt", token);
-        const { user } = decodeJWT(token);
-        User.setCurrUser(user);
-        if (res.status === 200) {
-          setState({
-            error: false,
-            isLoading: false,
-            success: true,
-            msg: "success",
-          });
-        }
-        history.push("/dashboard");
+      if (res && res.status === 200) {
+        setState({
+          error: false,
+          isLoading: false,
+          success: true,
+          msg:
+            "Thank you for registering. You will be redirected to the login screen promptly.",
+        });
+        setTimeout(() => history.push("/"), 3000);
       } else {
         errCallback(res ? res.status : 500);
       }
@@ -83,14 +79,9 @@ const RegisterPanel = () => {
 
   return (
     <div className="devise">
-      <h1 className="ui centered header">Welcome back.</h1>
-      <div className="register-remarks description">
-        New to Lovely Letters?{" "}
-        <Link to={{ pathname: "/auth/register" }} className="heavy">
-          Sign Up
-        </Link>
-      </div>
-      <Login handleSubmit={login} redirect="/dashboard" />
+      <h1 className="ui centered header">Lovely Letters</h1>
+      <div className="register-remarks description">Register here!</div>
+      <Register handleSubmit={register} redirect="/dashboard" />
     </div>
   );
 };

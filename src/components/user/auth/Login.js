@@ -50,7 +50,7 @@ const Login = ({ handleSubmit }) => {
       switch (type) {
         case "error":
           return (
-            <div className="error">
+            <div key="error" className="error">
               <strong>Error</strong>
               <br />
               {msg || ""}
@@ -58,7 +58,7 @@ const Login = ({ handleSubmit }) => {
           );
         case "success":
           return (
-            <div className="success">
+            <div key="success" className="success">
               <strong>Success</strong>
               <br />
               {msg || ""}
@@ -92,12 +92,12 @@ const Login = ({ handleSubmit }) => {
         />
       </Form.Group>
 
-      <Form.Group inline>
+      <Form.Group inline="true">
         <Form.Check
           value={remember}
           onClick={() => setRemember(!remember)}
           label="Remember me"
-          inline
+          inline="true"
         />
         <Link to={{ pathname: "/auth/reset" }} className="pull-right text">
           Forgot password?

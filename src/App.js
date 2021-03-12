@@ -74,54 +74,49 @@ const App = (props) => {
     actions: [authButton],
   };
 
-  const renderAuthRoutes = () => (
-    <>
-      <Route
-        exact
-        path="/"
-        component={() => (
-          <AuthView>
-            <LoginPanel />
-          </AuthView>
-        )}
-      />
-      <Route
-        exact
-        path="/auth/reset"
-        component={() => (
-          <AuthView>
-            <ResetPanel initStage={1} />
-          </AuthView>
-        )}
-      />
-      <Route
-        exact
-        path="/auth/reset/:_id"
-        component={() => (
-          <AuthView>
-            <ResetPanel initStage={2} />
-          </AuthView>
-        )}
-      />
-      <Route
-        path="/auth/register"
-        exact
-        component={() => (
-          <AuthView>
-            <RegisterPanel />
-          </AuthView>
-        )}
-      />
-    </>
-  );
-
   return (
     <div>
       <BrowserRouter>
         <UserContext.Provider value={{ currUser, setCurrUser, setIsLoggedIn }}>
           <ModalBuilder config={modalCfg} />
           <Switch>
-            {renderAuthRoutes()}
+            <Route
+              exact
+              path="/"
+              component={() => (
+                <AuthView>
+                  <LoginPanel />
+                </AuthView>
+              )}
+            />
+            <Route
+              exact
+              path="/auth/reset"
+              component={() => (
+                <AuthView>
+                  <ResetPanel initStage={1} />
+                </AuthView>
+              )}
+            />
+            <Route
+              exact
+              path="/auth/reset/:_id"
+              component={() => (
+                <AuthView>
+                  <ResetPanel initStage={2} />
+                </AuthView>
+              )}
+            />
+            <Route
+              path="/auth/register"
+              exact
+              component={() => (
+                <AuthView>
+                  <RegisterPanel />
+                </AuthView>
+              )}
+            />
+
             <>
               <Header />
               <Route path="/dashboard" exact component={Dashboard} />

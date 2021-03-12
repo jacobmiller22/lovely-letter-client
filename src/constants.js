@@ -9,6 +9,13 @@ export const initResetCreds = {
   new_password_2: "",
 };
 
+export const initRegisterCreds = {
+  username: "",
+  email: "",
+  password: "",
+  password_2: "",
+};
+
 export const noAuthRoutes = [
   "^/$",
   "^/auth/reset/?$",

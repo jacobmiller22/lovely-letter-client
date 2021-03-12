@@ -29,8 +29,23 @@ const Reset = ({ handleSubmit, init, stage }) => {
   };
 
   const handleChange = ({ target: { name, value } }) => {
-    console.log(vals);
-    setVals({ ...vals, [name]: value });
+    const tempVals = { ...vals, [name]: value };
+    if (tempVals.new_password !== tempVals.new_password_2) {
+      setState({
+        isLoading: false,
+        error: true,
+        success: false,
+        msg: "Passwords do not match.",
+      });
+    } else {
+      setState({
+        isLoading: false,
+        error: false,
+        success: false,
+        msg: "",
+      });
+    }
+    setVals(tempVals);
   };
 
   if (User.currUser) {
@@ -47,7 +62,7 @@ const Reset = ({ handleSubmit, init, stage }) => {
       switch (type) {
         case "error":
           return (
-            <div className="error">
+            <div key="error" className="error">
               <strong>Error</strong>
               <br />
               {msg || ""}
@@ -55,7 +70,7 @@ const Reset = ({ handleSubmit, init, stage }) => {
           );
         case "success":
           return (
-            <div className="success">
+            <div key="success" className="success">
               <strong>Success</strong>
               <br />
               {msg || ""}
@@ -84,6 +99,7 @@ const Reset = ({ handleSubmit, init, stage }) => {
         <Form.Group>
           <Form.Control
             name="new_password"
+            type="password"
             placeholder="New password"
             value={vals.new_password}
             onChange={handleChange}
@@ -92,6 +108,7 @@ const Reset = ({ handleSubmit, init, stage }) => {
         <Form.Group>
           <Form.Control
             name="new_password_2"
+            type="password"
             placeholder="Retype new password"
             value={vals.new_password_2}
             onChange={handleChange}
