@@ -1,13 +1,15 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useHistory, Link } from "react-router-dom";
 import UserContext from "../../../contexts/UserContext";
 import { initRegisterCreds } from "../../../constants";
 import map from "lodash/map";
+import { validateEmails, checkUsername } from "../../../utils/validate";
 
 import { Form } from "react-bootstrap";
 import LoadableButton from "../../LoadableButton";
 
 const Register = ({ handleSubmit }) => {
+  const [debouncedVals, setDebouncedVals] = useState(initRegisterCreds);
   const [vals, setVals] = useState(initRegisterCreds);
   const [state, setState] = useState({
     isLoading: false,
@@ -19,32 +21,48 @@ const Register = ({ handleSubmit }) => {
   const User = useContext(UserContext);
   let history = useHistory();
 
-  const onSubmit = (e) => {
-    handleSubmit(e, vals, setState);
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setDebouncedVals(vals);
+    }, 500);
 
-    if (state.type !== "error" || state.type !== "isLoading") {
-      setVals(initRegisterCreds);
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [vals]);
+
+  useEffect(() => {
+    (async () => {
+      if (await checkUsername(debouncedVals.username)) {
+        var msg = `Username '${debouncedVals.username}' is unavailable`;
+        console.log(msg);
+      } else if (validateEmails([debouncedVals.email]).length !== 0)
+        var msg = "The provided email address is invalid.";
+      else if (debouncedVals.password !== debouncedVals.password_2)
+        var msg = "The provided email address is invalid.";
+      else var msg = "";
+
+      setState({
+        isLoading: false,
+        error: msg.length !== 0,
+        success: false,
+        msg: msg,
+      });
+    })();
+  }, [debouncedVals]);
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (!state.error) {
+      handleSubmit(e, vals, setState);
     }
+    // if (!state.error || !state.isLoading || !state.success) {
+    //   setVals(initRegisterCreds);
+    // }
   };
 
   const handleChange = ({ target: { name, value } }) => {
-    const tempVals = { ...vals, [name]: value };
-    if (tempVals.password !== tempVals.password_2) {
-      setState({
-        isLoading: false,
-        error: true,
-        success: false,
-        msg: "Passwords do not match.",
-      });
-    } else {
-      setState({
-        isLoading: false,
-        error: false,
-        success: false,
-        msg: "",
-      });
-    }
-    setVals(tempVals);
+    setVals({ ...vals, [name]: value });
   };
 
   if (User.currUser) {

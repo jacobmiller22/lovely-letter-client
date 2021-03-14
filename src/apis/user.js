@@ -34,3 +34,9 @@ export const registerUser = (body) => {
   const { username, email, password } = body;
   return user.post("/auth", { username, email, password }, {});
 };
+
+export const checkUsernameAvailability = (params) => {
+  const { username } = params;
+
+  return user.get("/auth/username_availability", { params: { username } });
+};
