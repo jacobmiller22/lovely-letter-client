@@ -62,13 +62,16 @@ const ResetPanel = ({ initStage }) => {
           console.log("ERROR!");
           return;
         }
-        if (res.status === 200) {
+
+        if (res && res.status === 200) {
           setState({
             error: false,
             isLoading: false,
             success: true,
-            msg: "Your password has been successfully reset",
+            msg:
+              "Your password has been successfully reset. You will be redirected to the login screen promptly.",
           });
+          setTimeout(() => history.push("/"), 3000);
         }
       })();
       return;

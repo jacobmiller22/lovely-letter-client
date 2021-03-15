@@ -24,8 +24,6 @@ const RegisterPanel = () => {
       }
       setState({ error: false, isLoading: true, success: false });
 
-      const params = { user: vals };
-
       const errCallback = (code) => {
         switch (+code) {
           case 422:

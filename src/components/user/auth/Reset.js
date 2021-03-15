@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import UserContext from "../../../contexts/UserContext";
 import map from "lodash/map";
@@ -9,6 +9,7 @@ import "./Auth.css";
 import LoadableButton from "../../LoadableButton";
 
 const Reset = ({ handleSubmit, init, stage }) => {
+  const [debouncedVals, setDebouncedVals] = useState(init);
   const [vals, setVals] = useState(init);
   const [state, setState] = useState({
     isLoading: false,
@@ -20,32 +21,40 @@ const Reset = ({ handleSubmit, init, stage }) => {
   const User = useContext(UserContext);
   let history = useHistory();
 
-  const onSubmit = (e) => {
-    handleSubmit(e, vals, setState);
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setDebouncedVals(vals);
+    }, 500);
 
-    if (state.type !== "error") {
-      setVals(init);
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [vals]);
+
+  useEffect(() => {
+    (async () => {
+      if (debouncedVals.new_password !== debouncedVals.new_password_2)
+        var msg = "The provided email address is invalid.";
+      else var msg = "";
+
+      setState({
+        isLoading: false,
+        error: msg.length !== 0,
+        success: false,
+        msg: msg,
+      });
+    })();
+  }, [debouncedVals]);
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (!state.error) {
+      handleSubmit(e, vals, setState);
     }
   };
 
   const handleChange = ({ target: { name, value } }) => {
-    const tempVals = { ...vals, [name]: value };
-    if (tempVals.new_password !== tempVals.new_password_2) {
-      setState({
-        isLoading: false,
-        error: true,
-        success: false,
-        msg: "Passwords do not match.",
-      });
-    } else {
-      setState({
-        isLoading: false,
-        error: false,
-        success: false,
-        msg: "",
-      });
-    }
-    setVals(tempVals);
+    setVals({ ...vals, [name]: value });
   };
 
   if (User.currUser) {
@@ -91,7 +100,10 @@ const Reset = ({ handleSubmit, init, stage }) => {
     if (stage === 1) {
       resetBtnCfg = { ...resetBtnCfg, text: "Next" };
       return (
-        <LoadableButton isLoading={state.isLoading} btnCfg={resetBtnCfg} />
+        <>
+          <div id="form-msg-board">{renderMsg(state.msg)}</div>
+          <LoadableButton isLoading={state.isLoading} btnCfg={resetBtnCfg} />
+        </>
       );
     }
     return (
@@ -114,6 +126,7 @@ const Reset = ({ handleSubmit, init, stage }) => {
             onChange={handleChange}
           />
         </Form.Group>
+        <div id="form-msg-board">{renderMsg(state.msg)}</div>
         <LoadableButton isLoading={state.isLoading} btnCfg={resetBtnCfg} />
       </>
     );
@@ -131,7 +144,7 @@ const Reset = ({ handleSubmit, init, stage }) => {
           />
         </Form.Group>
       ) : null}
-      <div id="form-msg-board">{renderMsg(state.msg)}</div>
+
       {renderContinue()}
     </Form>
   );
